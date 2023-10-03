@@ -1,0 +1,56 @@
+<nav class="side-nav-wrapper">
+  <div class="logo-wrapper">
+    <img src="assets/icons/logo.svg" />
+  </div>
+  <div class="user-wrapper">
+    <span class="material-symbols-outlined person-icon">account_circle</span>
+    <span class="user-personal-info">{{ user.fullname }}</span>
+  </div>
+
+  <div class="documents-list">
+    <div *ngIf="documentsForReview.length" class="document-wrapper">
+      <span style="text-transform: uppercase">Dokumenti za pregled</span>
+      <div *ngFor="let item of documentsForReview" class="document">
+        <div [ngSwitch]="item.status" class="document-icon">
+          <div *ngSwitchCase="'not reviewed'">
+            <span class="material-symbols-outlined"> contract </span>
+          </div>
+          <div *ngSwitchCase="'reviewed'">
+            <span class="material-symbols-outlined"> task_alt </span>
+          </div>
+          <div *ngSwitchCase="'error'">
+            <span class="material-symbols-outlined"> error </span>
+          </div>
+          <div *ngSwitchDefault>
+            <span class="material-symbols-outlined"> description </span>
+          </div>
+        </div>
+
+        {{ item.documentName }}
+      </div>
+    </div>
+    <div *ngIf="documentsToSigne.length" class="document-wrapper">
+      <span style="text-transform: uppercase">Dokumenti za potpisivanje</span>
+      <div *ngFor="let item of documentsToSigne" class="document">
+        <div [ngSwitch]="item.status" class="document-icon">
+          <div *ngSwitchCase="'not reviewed'">
+            <span class="material-symbols-outlined"> contract_edit </span>
+          </div>
+          <div *ngSwitchCase="'reviewed'">
+            <span class="material-symbols-outlined"> schedule </span>
+          </div>
+          <div *ngSwitchCase="'signed'">
+            <span class="material-symbols-outlined"> task_alt </span>
+          </div>
+          <div *ngSwitchCase="'error'">
+            <span class="material-symbols-outlined"> error </span>
+          </div>
+          <div *ngSwitchDefault>
+            <span class="material-symbols-outlined"> description </span>
+          </div>
+        </div>
+        {{ item.documentName }}
+      </div>
+    </div>
+  </div>
+</nav>
