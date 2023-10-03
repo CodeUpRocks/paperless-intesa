@@ -6,15 +6,9 @@ import { AppComponent } from './app.component';
 import { SideNavToolbarComponent } from './layouts/side-nav-toolbar/side-nav-toolbar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SideNavToolbarComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent, SideNavToolbarComponent],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
