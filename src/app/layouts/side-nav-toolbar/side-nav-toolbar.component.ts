@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DocumentState } from '@enums/document.enums';
 
 @Component({
   selector: 'app-side-nav-toolbar',
@@ -13,13 +14,14 @@ export class SideNavToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentsForReview = [
-      { documentName: 'document 1', status: 'reviewed', error: null },
-      { documentName: 'document 2', status: 'not reviewed', error: null },
-      { documentName: 'document 3', status: 'error', error: null },
+      { name: 'Dokument 1', status: DocumentState.REVIEW },
+      { name: 'Long name Dokument', status: DocumentState.REVIEW },
+      { name: 'Dokument 3', status: DocumentState.REVIEW },
     ];
     this.documentsToSigne = [
-      { documentName: 'document 1', status: 'not reviewed', error: null },
-      { documentName: 'document 2', status: 'not reviewed', error: null },
+      { name: 'Dokument 1', status: DocumentState.SIGN },
+      { name: 'Long name Dokument', status: DocumentState.SIGN },
+      { name: 'Dokument 3', status: DocumentState.SIGN },
     ];
   }
 }

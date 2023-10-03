@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 10px;
+
+  .name {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}

@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'paperless-intesa';
   user = { name: 'Lola', surname: 'Ponorac', fullname: 'Lola Ponorac' };
 }
