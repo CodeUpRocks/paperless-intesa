@@ -2,3 +2,74 @@
   display: flex;
   height: 100%;
 }
+
+button.btn-primary {
+  cursor: pointer;
+  min-width: 180px;
+  max-width: fit-content;
+  height: 48px;
+  color: #fff;
+  background-color: #ea600e;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: normal;
+  border: none;
+
+  &:hover,
+  &:active {
+    background-color: #da5404;
+  }
+}
+
+.future-steps-wrapper {
+  display: flex;
+  text-align: center;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  & > h2 {
+    font-size: 26px;
+    line-height: normal;
+    color: #ea600e;
+    margin-bottom: 35px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    position: relative;
+
+    .step-connection-line {
+      height: 8px;
+      position: absolute;
+      background-color: #ededed;
+      width: calc(100% - 200px);
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: 7px;
+    }
+
+    .step {
+      position: relative;
+      width: 200px;
+      aspect-ratio: 1 / 1;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+
+      .step-name {
+        color: #4d4d4d;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: normal;
+      }
+    }
+  }
+}

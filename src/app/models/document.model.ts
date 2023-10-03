@@ -5,3 +5,8 @@ export enum DocumentState {
   ERROR = 'ERROR',
   WAITING = 'WAITING',
 }
+
+export interface Document {
+  name: string;
+  state: DocumentState;
+}

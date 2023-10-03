@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DocumentState } from '@enums/document.enums';
+import { Component, Input } from '@angular/core';
+import { DocumentState } from '@models/document.model';
 
 const iconsUrl = {
   [DocumentState.REVIEW]: 'assets/icons/document-review.svg',
@@ -13,12 +13,10 @@ const iconsUrl = {
   selector: 'app-document-state-icon',
   template: `<img style="display: block;" class="icon" [src]="imageSrc" />`,
 })
-export class DocumentStateIconComponent implements OnInit {
+export class DocumentStateIconComponent {
   @Input() state: DocumentState = DocumentState.WAITING;
 
   get imageSrc() {
     return iconsUrl[this.state];
   }
-
-  ngOnInit(): void {}
 }
