@@ -1,0 +1,38 @@
+button {
+  cursor: pointer;
+  min-width: 180px;
+  max-width: fit-content;
+  height: 48px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: normal;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &.btn-primary {
+    background-color: #ea600e;
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) {
+      background-color: #da5404;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #299f00;
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) {
+      background-color: #217f00;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

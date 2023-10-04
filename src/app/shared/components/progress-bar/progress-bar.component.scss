@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  padding: 0px 20px;
+
+  .divider {
+    flex: 1;
+    height: 3px;
+    background-color: #ea600e;
+
+    &.disabled {
+      background-color: #e6e5e5;
+    }
+  }
+
+  .step {
+    border-radius: 30px;
+    background-color: white;
+    font-weight: bold;
+    padding: 8px 12px 8px 3px;
+    font-size: 14px;
+    white-space: nowrap;
+
+    &.disabled {
+      background-color: transparent;
+      color: #e6e5e5;
+
+      .step-number {
+        background-color: #e6e5e5;
+        color: white;
+      }
+    }
+
+    .step-number {
+      display: inline-block;
+      background-color: #ea600e;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      color: white;
+      margin-right: 8px;
+    }
+  }
+}
