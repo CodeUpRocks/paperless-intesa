@@ -1,0 +1,28 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .header {
+    // margin: 0 auto;
+    color: #fff;
+    height: 93px;
+    width: 100%;
+    background-color: #ea600e;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    height: 100%;
+    
+  }
+
+  div.document{
+    justify-content: start;
+  }
+}

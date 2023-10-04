@@ -1,0 +1,14 @@
+<div>
+  <app-text-card [title]="title" [text]="text"></app-text-card>
+
+  <div class="document">
+    <ng-container *ngFor="let item of documentsToSigne">
+      <app-document-view-item [name]="item.name"></app-document-view-item>
+    </ng-container>
+  </div>
+
+  <app-button>
+    <img src="assets/icons/edit-icon.svg" alt="edit-icon" />
+    <span>Potpišite</span>
+  </app-button>
+</div>

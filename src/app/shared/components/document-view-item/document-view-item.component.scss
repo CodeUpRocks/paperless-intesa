@@ -1,0 +1,16 @@
+:host {
+  background-color: #fff;
+  color: #4d4d4d;
+  width: 276px;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding-left: 15px;
+
+  .name {
+    font-size: 15px;
+    line-height: normal;
+  }
+}

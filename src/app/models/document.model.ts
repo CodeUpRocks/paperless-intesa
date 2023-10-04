@@ -6,6 +6,11 @@ export enum DocumentState {
   WAITING = 'WAITING',
 }
 
+export enum ProcessState {
+  ERROR = 'ERROR',
+  SUCCESS = 'SUCCESS',
+}
+
 export interface Document {
   name: string;
   state: DocumentState;

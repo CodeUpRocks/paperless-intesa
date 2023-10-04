@@ -21,4 +21,7 @@ export class InitialStepComponent {
       imageUrl: 'assets/icons/sign-step-icon.svg',
     },
   ];
+  title = 'Potrebno je da pregledate i prihvatite dokument u nastavku';
+  text =
+    'Potrebno je da pregledaš i prihvatiš dokumentu nastavku. Nakon toga je neophodan i potpis. Biće ti ponuđena opcija za potpisivanje putem Consent ID aplikacije.';
 }
