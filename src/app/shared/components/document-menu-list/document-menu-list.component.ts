@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Document } from '@models/document.model';
+import { IntesaDocument } from '@models/document.model';
 
 @Component({
   selector: 'app-document-menu-list',
@@ -8,5 +8,5 @@ import { Document } from '@models/document.model';
 })
 export class DocumentMenuListComponent {
   @Input() title: string;
-  @Input() documents: Document[];
+  @Input() documents: IntesaDocument[];
 }

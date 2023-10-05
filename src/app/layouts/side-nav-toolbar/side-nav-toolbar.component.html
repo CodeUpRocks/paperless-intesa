@@ -10,16 +10,20 @@
   </div>
 
   <div class="documents-list">
-    <app-document-menu-list
-      *ngIf="documentsForReview.length"
-      title="Dokumenti za pregled"
-      [documents]="documentsForReview"
-    ></app-document-menu-list>
+    <ng-container *ngIf="documentsForReview$ | async as forReview">
+      <app-document-menu-list
+        *ngIf="!!forReview.length"
+        title="Dokumenti za pregled"
+        [documents]="forReview"
+      ></app-document-menu-list>
+    </ng-container>
 
-    <app-document-menu-list
-      *ngIf="documentsToSigne.length"
-      title="Dokumenti za potpisivanje"
-      [documents]="documentsToSigne"
-    ></app-document-menu-list>
+    <ng-container *ngIf="documentsForSigning$ | async as forSigning">
+      <app-document-menu-list
+        *ngIf="forSigning.length"
+        title="Dokumenti za potpisivanje"
+        [documents]="forSigning"
+      ></app-document-menu-list>
+    </ng-container>
   </div>
 </nav>

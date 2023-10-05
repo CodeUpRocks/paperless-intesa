@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { DocumentState } from '@models/document.model';
+import { IntesaDocument } from '@models/document.model';
 
 @Component({
   selector: 'app-document-menu-item',
@@ -8,9 +8,10 @@ import { DocumentState } from '@models/document.model';
 })
 export class DocumentMenuItemComponent {
   @Input() disabled = false;
-  @Input() name: string;
-  @Input() state: DocumentState;
+  @Input() document: IntesaDocument;
 
   @HostBinding('style.opacity')
-  opacity: number = this.disabled ? 0.5 : 1;
+  get opacity(): number {
+    return this.disabled ? 0.5 : 1;
+  }
 }

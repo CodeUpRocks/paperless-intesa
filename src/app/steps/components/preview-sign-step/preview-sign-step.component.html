@@ -2,8 +2,11 @@
   <app-text-card [title]="title" [text]="text"></app-text-card>
 
   <div class="document">
-    <ng-container *ngFor="let item of documentsToSigne">
-      <app-document-view-item [name]="item.name"></app-document-view-item>
+    <ng-container *ngIf="documentsForSigning$ | async as forSigning">
+      <app-document-view-item
+        *ngFor="let item of forSigning"
+        [name]="item.name"
+      ></app-document-view-item>
     </ng-container>
   </div>
 
