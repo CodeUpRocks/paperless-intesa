@@ -1,12 +1,26 @@
-<app-side-nav-toolbar [user]="user"></app-side-nav-toolbar>
+<app-side-nav-toolbar
+  *ngIf="currentStep !== steps.WAITING"
+  [user]="user"
+></app-side-nav-toolbar>
+
+<app-advertisements-step
+  *ngIf="currentStep === steps.WAITING"
+></app-advertisements-step>
+
 <main class="content">
-  <app-progress-bar></app-progress-bar>
+  <app-progress-bar
+    *ngIf="currentStep !== steps.INITIALSTEP && currentStep !== steps.WAITING"
+  ></app-progress-bar>
 
-  <!-- <app-initial-step></app-initial-step> -->
+  <app-initial-step
+    *ngIf="currentStep === steps.INITIALSTEP"
+  ></app-initial-step>
 
-  <!-- <app-review-step></app-review-step> -->
+  <app-review-step *ngIf="currentStep === steps.REVIEWSTEP"></app-review-step>
 
-  <app-preview-sign-step></app-preview-sign-step>
+  <app-preview-sign-step
+    *ngIf="currentStep === steps.PREVIEWSTEP"
+  ></app-preview-sign-step>
 
-  <!-- <app-final-step></app-final-step> -->
+  <app-final-step *ngIf="currentStep === steps.FINALSTEP"></app-final-step>
 </main>

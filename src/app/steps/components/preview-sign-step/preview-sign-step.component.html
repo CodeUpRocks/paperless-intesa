@@ -1,16 +1,19 @@
 <div>
   <app-text-card [title]="title" [text]="text"></app-text-card>
 
-  <div class="document">
-    <ng-container *ngIf="documentsForSigning$ | async as forSigning">
-      <app-document-view-item
-        *ngFor="let item of forSigning"
-        [name]="item.name"
-      ></app-document-view-item>
-    </ng-container>
+  <div class="content">
+    <div class="document-wrapper" *ngIf="documentsForSigning">
+      <div
+        class="document"
+        *ngFor="let item of documentsForSigning"
+        (click)="onClick(item)"
+      >
+        <app-document-view-item [name]="item.name"></app-document-view-item>
+      </div>
+    </div>
   </div>
 
-  <app-button>
+  <app-button (buttonClick)="onAccept()">
     <img src="assets/icons/edit-icon.svg" alt="edit-icon" />
     <span>Potpišite</span>
   </app-button>

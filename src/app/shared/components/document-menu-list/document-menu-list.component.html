@@ -3,6 +3,6 @@
   <app-document-menu-item
     *ngFor="let item of documents"
     [document]="item"
-    [disabled]="item.state === 'INITIAL'"
+    [disabled]="item.state === 'INITIAL' && currentIndex !== item.index"
   />
 </div>

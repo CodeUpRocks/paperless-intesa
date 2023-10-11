@@ -14,15 +14,24 @@
 
   div {
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
-    gap: 30px;
     align-items: center;
-    height: 100%;
-    
   }
 
-  div.document{
+  div.document-wrapper {
+    gap: 30px;
+    margin-bottom: 35px;
+    justify-content: start;
+    flex: 0;
+  }
+
+  div.content {
+    justify-content: flex-start;
+  }
+
+  .document {
     justify-content: start;
   }
 }

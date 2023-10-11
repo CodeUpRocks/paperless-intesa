@@ -3,6 +3,7 @@ export enum DocumentState {
   COMPLETED = 'COMPLETED',
   ERROR = 'ERROR',
   WAITING = 'WAITING',
+  CHANGING = 'CHANGING',
 }
 
 export enum DocumentStep {
@@ -21,10 +22,19 @@ export enum ProcessState {
   SUCCESS = 'SUCCESS',
 }
 
+export enum ProcessSteps {
+  INITIALSTEP = 'INITIAL',
+  PREVIEWSTEP = 'PREVIEW',
+  WAITING = 'WAITING',
+  REVIEWSTEP = 'REVIEW',
+  FINALSTEP = 'FINAL',
+}
+
 export interface IntesaDocument {
   id: number;
   name: string;
   state: DocumentState; // Track different states for a document
   type: DocumentType; // Determine which kind of document it is
-  currentStep: DocumentStep; // Tracking progress bar step
+  documentUrl: string;
+  index?: number;
 }

@@ -1,11 +1,30 @@
-<div class="pdf-viewer"></div>
+<div class="pdf-wrapper">
+  <div
+    #pdfViewer
+    class="pdf-viewer"
+    appScrollTracker
+    (scrolled)="onScroll($event)"
+  >
+    <pdf-viewer
+      [src]="pdfSrc"
+      [render-text]="true"
+      [original-size]="false"
+      [fit-to-page]="fit"
+      (page-rendered)="pageRendered($event)"
+    ></pdf-viewer>
+  </div>
+</div>
 
 <div class="actions">
-  <app-button>
+  <app-button [disabled]="actionsDisabled" (buttonClick)="onChange()">
     <img src="assets/icons/edit-icon.svg" alt="edit-icon" />
     <span>Izmenite</span>
   </app-button>
-  <app-button color="secondary">
+  <app-button
+    color="secondary"
+    [disabled]="actionsDisabled"
+    (buttonClick)="onAccept()"
+  >
     <img src="assets/icons/check-icon.svg" alt="check-icon" />
     <span>Prihvatite</span>
   </app-button>

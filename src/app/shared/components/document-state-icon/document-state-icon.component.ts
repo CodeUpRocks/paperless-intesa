@@ -21,7 +21,10 @@ export class DocumentStateIconComponent {
   @Input() type: DocumentType = DocumentType.FOR_REVIEW;
 
   get imageSrc() {
-    if (this.state === DocumentState.INITIAL) {
+    if (
+      this.state === DocumentState.INITIAL ||
+      this.state === DocumentState.CHANGING
+    ) {
       return iconUrlByType[this.type];
     }
 
