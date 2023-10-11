@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IntesaDocument } from '@models/document.model';
 import { User } from '@models/user.model';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DocumentsService } from 'src/app/services/documents.service';
 
 @Component({

@@ -21,4 +21,8 @@ export class DocumentMenuListComponent implements OnInit {
         this.currentIndex = index;
       });
   }
+
+  trackByFn(index: number, document: IntesaDocument) {
+    return document.id;
+  }
 }
