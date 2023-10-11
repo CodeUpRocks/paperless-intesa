@@ -9,6 +9,7 @@ import { FutureStepComponent } from './future-step/future-step.component';
 import { FutureStepsWrapperComponent } from './future-steps-wrapper/future-steps-wrapper.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TextCardComponent } from './text-card/text-card.component';
+import { ModalComponent } from './modal/modal.component';
 
 export const components = [
   DocumentStateIconComponent,
@@ -21,6 +22,7 @@ export const components = [
   ProgressBarComponent,
   TextCardComponent,
   DocumentViewItemComponent,
+  ModalComponent,
 ];
 
 export { ButtonComponent } from './button/button.component';
@@ -33,3 +35,4 @@ export { FutureStepsWrapperComponent } from './future-steps-wrapper/future-steps
 export { ProgressBarComponent } from './progress-bar/progress-bar.component';
 export { TextCardComponent } from './text-card/text-card.component';
 export { DocumentViewItemComponent } from './document-view-item/document-view-item.component';
+export { ModalComponent } from './modal/modal.component';

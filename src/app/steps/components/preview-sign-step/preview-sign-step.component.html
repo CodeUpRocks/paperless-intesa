@@ -18,3 +18,8 @@
     <span>Potpišite</span>
   </app-button>
 </div>
+<app-modal
+  *ngIf="isModalOpen"
+  [document]="document"
+  (closeModal)="onCloseModal()"
+></app-modal>
