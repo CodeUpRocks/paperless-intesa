@@ -46,4 +46,10 @@
       margin-right: 8px;
     }
   }
+
+  @media screen and (max-width: 1024px) {
+    .step {
+      font-size: 12px !important;
+    }
+  }
 }
