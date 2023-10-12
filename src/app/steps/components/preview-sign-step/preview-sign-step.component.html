@@ -3,13 +3,11 @@
 
   <div class="content">
     <div class="document-wrapper" *ngIf="documentsForSigning">
-      <div
-        class="document"
+      <app-document-view-item
         *ngFor="let item of documentsForSigning"
-        (click)="onClick(item)"
-      >
-        <app-document-view-item [name]="item.name"></app-document-view-item>
-      </div>
+        [name]="item.name"
+        (openDocument)="onClick(item)"
+      ></app-document-view-item>
     </div>
   </div>
 

@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-document-view-item',
@@ -7,4 +13,11 @@ import { Component, Input } from '@angular/core';
 })
 export class DocumentViewItemComponent {
   @Input() name: string;
+
+  @Output() openDocument = new EventEmitter<void>();
+
+  @HostListener('click')
+  onClick() {
+    this.openDocument.emit();
+  }
 }
