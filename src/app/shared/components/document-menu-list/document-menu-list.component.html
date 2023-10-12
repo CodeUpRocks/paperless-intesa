@@ -4,5 +4,6 @@
     *ngFor="let item of documents; trackBy: trackByFn"
     [document]="item"
     [disabled]="item.state === 'INITIAL' && currentIndex !== item.index"
+    [active]="currentIndex === item.index"
   />
 </div>

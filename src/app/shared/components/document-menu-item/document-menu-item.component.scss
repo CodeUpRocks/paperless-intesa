@@ -4,6 +4,14 @@
   width: 100%;
   justify-content: flex-start;
   gap: 10px;
+  border-left: 2px solid;
+  border-color: #ea600e;
+  padding-left: 13px;
+  padding-right: 10px;
+
+  &.active {
+    border-color: white;
+  }
 
   .name {
     font-size: 15px;
