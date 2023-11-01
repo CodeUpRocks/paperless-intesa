@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { IntesaDocument } from '@models/document.model';
 import { User } from '@models/user.model';
 import { Observable } from 'rxjs';
@@ -12,6 +12,9 @@ import { DocumentsService } from 'src/app/services/documents.service';
 export class SideNavToolbarComponent implements OnInit {
   @Input() user: User;
 
+  @HostBinding('class.collapsed')
+  collapsed = true;
+
   documentsForReview$: Observable<IntesaDocument[]>;
   documentsForSigning$: Observable<IntesaDocument[]>;
 
@@ -21,5 +24,9 @@ export class SideNavToolbarComponent implements OnInit {
     this.documentsForReview$ = this._documentService.getDocumentsForReview$();
 
     this.documentsForSigning$ = this._documentService.getDocumentsForSign$();
+  }
+
+  toggleSidebar() {
+    this.collapsed = !this.collapsed;
   }
 }

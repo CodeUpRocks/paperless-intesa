@@ -1,3 +1,12 @@
+.divider {
+  display: none;
+  background-color: #c8c8c8;
+  height: 2px;
+  width: 100%;
+  margin-top: 7.5px;
+  margin-bottom: 32.5px;
+}
+
 .title {
   text-transform: uppercase;
   font-weight: bold;
@@ -8,5 +17,4 @@
 .list-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }

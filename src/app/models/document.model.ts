@@ -4,12 +4,13 @@ export enum DocumentState {
   ERROR = 'ERROR',
   WAITING = 'WAITING',
   CHANGING = 'CHANGING',
+  ACTIVE = 'ACTIVE',
 }
 
 export enum DocumentStep {
-  REVIEW = 'REVIEW',
-  ACCEPTANCE = 'ACCEPTANCE',
-  SIGNING = 'SIGNING',
+  REVIEW = 1,
+  ACCEPTANCE = 2,
+  SIGNING = 3,
 }
 
 export enum DocumentType {

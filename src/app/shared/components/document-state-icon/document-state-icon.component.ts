@@ -5,13 +5,13 @@ const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
   [DocumentType.FOR_REVIEW]: {
     [DocumentState.INITIAL]: 'assets/icons/review-initial.svg',
     [DocumentState.COMPLETED]: 'assets/icons/review-completed.svg',
-    [DocumentState.CHANGING]: 'assets/icons/review-initial.svg',
+    [DocumentState.ACTIVE]: 'assets/icons/review-active.svg',
   },
   [DocumentType.FOR_SIGNING]: {
     [DocumentState.INITIAL]: 'assets/icons/sign-initial.svg',
     [DocumentState.COMPLETED]: 'assets/icons/sign-completed.svg',
+    [DocumentState.ACTIVE]: 'assets/icons/sign-active.svg',
     [DocumentState.WAITING]: 'assets/icons/sign-waiting.svg',
-    [DocumentState.CHANGING]: 'assets/icons/sign-initial.svg',
   },
 };
 
@@ -31,8 +31,9 @@ const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
 export class DocumentStateIconComponent {
   @Input() state: DocumentState = DocumentState.INITIAL;
   @Input() type: DocumentType = DocumentType.FOR_REVIEW;
+  @Input() active = false;
 
   get imageSrc() {
-    return icons[this.type][this.state];
+    return icons[this.type][this.active ? DocumentState.ACTIVE : this.state];
   }
 }

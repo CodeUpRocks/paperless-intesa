@@ -2,24 +2,18 @@
   <img src="assets/icons/pregled-dokumenta.svg" alt="pregled-dokumenta" />
   Pregled dokumenta
 </div>
-<div class="divider disabled"></div>
-<div
-  [ngClass]="
-    currentDocumentStep !== documentSteps.REVIEW ? 'step' : 'step disabled'
-  "
->
+<div class="divider" [ngClass]="{ disabled: currentDocumentStep < 2 }"></div>
+<div class="step" [ngClass]="{ disabled: currentDocumentStep < 2 }">
+  <!-- TODO: Add disabled images -->
   <img
     src="assets/icons/prihvatanje-dokumenta.svg"
     alt="prihvatanje-dokumenta"
   />
   Prihvatanje dokumenta
 </div>
-<div class="divider disabled"></div>
-<div
-  [ngClass]="
-    currentDocumentStep === documentSteps.SIGNING ? 'step' : 'step disabled'
-  "
->
+<div class="divider" [ngClass]="{ disabled: currentDocumentStep < 2 }"></div>
+<div class="step" [ngClass]="{ disabled: currentDocumentStep < 2 }">
+  <!-- TODO: Add disabled images -->
   <img
     src="assets/icons/potpisivanje-dokumenta.svg"
     alt="potpisivanje-dokumenta"

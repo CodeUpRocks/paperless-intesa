@@ -1,9 +1,13 @@
 <nav class="sidebar">
   <div class="toggle-container">
-    <button type="button" class="toggle-btn">
+    <button (click)="toggleSidebar()" type="button" class="toggle-btn">
       <img
         width="33px"
-        src="assets/icons/collapse-sidebar.svg"
+        [src]="
+          collapsed
+            ? 'assets/icons/expand-sidebar.svg'
+            : 'assets/icons/collapse-sidebar.svg'
+        "
         alt="collapse-sidebar"
       />
     </button>
@@ -12,7 +16,7 @@
   <!-- TODO: Create an avatar component -->
   <div class="user-wrapper">
     <span class="avatar">LP</span>
-    <span>{{ user.fullName }}</span>
+    <span class="name">{{ user.fullName }}</span>
   </div>
 
   <div class="documents-list">
@@ -33,5 +37,19 @@
     </ng-container>
   </div>
 
-  <img width="180px" src="assets/images/logo.png" />
+  <div class="logo-container">
+    <!-- TODO: Manage logo better -->
+    <img
+      *ngIf="!collapsed"
+      class="logo"
+      width="180px"
+      src="assets/images/logo.png"
+    />
+    <img
+      *ngIf="collapsed"
+      class="logo-short"
+      width="24px"
+      src="assets/images/logo-short.png"
+    />
+  </div>
 </nav>
