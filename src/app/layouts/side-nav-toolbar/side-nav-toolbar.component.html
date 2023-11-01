@@ -1,11 +1,17 @@
 <nav class="sidebar">
-  <div class="logo-wrapper">
-    <img src="assets/icons/logo.svg" />
+  <div class="toggle-container">
+    <button type="button" class="toggle-btn">
+      <img
+        width="33px"
+        src="assets/icons/collapse-sidebar.svg"
+        alt="collapse-sidebar"
+      />
+    </button>
   </div>
 
   <!-- TODO: Create an avatar component -->
   <div class="user-wrapper">
-    <img src="assets/icons/avatar-female.svg" />
+    <span class="avatar">LP</span>
     <span>{{ user.fullName }}</span>
   </div>
 
@@ -26,4 +32,6 @@
       ></app-document-menu-list>
     </ng-container>
   </div>
+
+  <img width="180px" src="assets/images/logo.png" />
 </nav>

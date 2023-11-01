@@ -12,15 +12,17 @@
     *ngIf="currentStep !== steps.INITIALSTEP && currentStep !== steps.WAITING"
   ></app-progress-bar>
 
-  <app-initial-step
-    *ngIf="currentStep === steps.INITIALSTEP"
-  ></app-initial-step>
+  <section class="steps">
+    <app-initial-step
+      *ngIf="currentStep === steps.INITIALSTEP"
+    ></app-initial-step>
 
-  <app-review-step *ngIf="currentStep === steps.REVIEWSTEP"></app-review-step>
+    <app-review-step *ngIf="currentStep === steps.REVIEWSTEP"></app-review-step>
 
-  <app-preview-sign-step
-    *ngIf="currentStep === steps.PREVIEWSTEP"
-  ></app-preview-sign-step>
+    <app-preview-sign-step
+      *ngIf="currentStep === steps.PREVIEWSTEP"
+    ></app-preview-sign-step>
 
-  <app-final-step *ngIf="currentStep === steps.FINALSTEP"></app-final-step>
+    <app-final-step *ngIf="currentStep === steps.FINALSTEP"></app-final-step>
+  </section>
 </main>

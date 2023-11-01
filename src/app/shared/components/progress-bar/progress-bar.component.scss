@@ -1,13 +1,15 @@
 :host {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-bottom: 40px;
-  padding: 0px 20px;
+  border-radius: 33px;
+  background: #fdfdfd;
+  box-shadow: 2px 2px 9px 0px rgba(58, 58, 58, 0.11);
+  padding: 10px;
 
   .divider {
-    flex: 1;
+    width: 75px;
     height: 3px;
     background-color: #ea600e;
 
@@ -17,21 +19,17 @@
   }
 
   .step {
-    border-radius: 30px;
-    background-color: white;
-    font-weight: bold;
-    padding: 8px 12px 8px 3px;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
     white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
     &.disabled {
-      background-color: transparent;
-      color: #e6e5e5;
-
-      .step-number {
-        background-color: #e6e5e5;
-        color: white;
-      }
+      color: #cacaca;
     }
 
     .step-number {

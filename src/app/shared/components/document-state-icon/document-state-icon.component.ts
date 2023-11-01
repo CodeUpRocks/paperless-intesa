@@ -1,33 +1,38 @@
 import { Component, Input } from '@angular/core';
 import { DocumentState, DocumentType } from '@models/document.model';
 
-const iconUrlByType = {
-  [DocumentType.FOR_REVIEW]: 'assets/icons/document-review.svg',
-  [DocumentType.FOR_SIGNING]: 'assets/icons/document-sign.svg',
-};
-
-const iconUrlByState = {
-  [DocumentState.ERROR]: 'assets/icons/document-error.svg',
-  [DocumentState.COMPLETED]: 'assets/icons/document-completed.svg',
-  [DocumentState.WAITING]: 'assets/icons/document-waiting.svg',
+const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
+  [DocumentType.FOR_REVIEW]: {
+    [DocumentState.INITIAL]: 'assets/icons/review-initial.svg',
+    [DocumentState.COMPLETED]: 'assets/icons/review-completed.svg',
+    [DocumentState.CHANGING]: 'assets/icons/review-initial.svg',
+  },
+  [DocumentType.FOR_SIGNING]: {
+    [DocumentState.INITIAL]: 'assets/icons/sign-initial.svg',
+    [DocumentState.COMPLETED]: 'assets/icons/sign-completed.svg',
+    [DocumentState.WAITING]: 'assets/icons/sign-waiting.svg',
+    [DocumentState.CHANGING]: 'assets/icons/sign-initial.svg',
+  },
 };
 
 @Component({
   selector: 'app-document-state-icon',
-  template: `<img style="display: block;" class="icon" [src]="imageSrc" />`,
+  template: `<img class="icon" [src]="imageSrc" />`,
+  styles: [
+    `
+      .icon {
+        display: block;
+        box-shadow: 2px 2px 9px 1px #3a3a3a1c;
+        border-radius: 8px;
+      }
+    `,
+  ],
 })
 export class DocumentStateIconComponent {
   @Input() state: DocumentState = DocumentState.INITIAL;
   @Input() type: DocumentType = DocumentType.FOR_REVIEW;
 
   get imageSrc() {
-    if (
-      this.state === DocumentState.INITIAL ||
-      this.state === DocumentState.CHANGING
-    ) {
-      return iconUrlByType[this.type];
-    }
-
-    return iconUrlByState[this.state];
+    return icons[this.type][this.state];
   }
 }

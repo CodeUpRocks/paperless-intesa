@@ -1,11 +1,18 @@
-<div class="step"><span class="step-number">1</span> Pregled dokumenta</div>
+<div class="step">
+  <img src="assets/icons/pregled-dokumenta.svg" alt="pregled-dokumenta" />
+  Pregled dokumenta
+</div>
 <div class="divider disabled"></div>
 <div
   [ngClass]="
     currentDocumentStep !== documentSteps.REVIEW ? 'step' : 'step disabled'
   "
 >
-  <span class="step-number">2</span> Prihvatanje dokumenta
+  <img
+    src="assets/icons/prihvatanje-dokumenta.svg"
+    alt="prihvatanje-dokumenta"
+  />
+  Prihvatanje dokumenta
 </div>
 <div class="divider disabled"></div>
 <div
@@ -13,5 +20,9 @@
     currentDocumentStep === documentSteps.SIGNING ? 'step' : 'step disabled'
   "
 >
-  <span class="step-number">3</span> Potpisivanje dokumenta
+  <img
+    src="assets/icons/potpisivanje-dokumenta.svg"
+    alt="potpisivanje-dokumenta"
+  />
+  Potpisivanje dokumenta
 </div>
