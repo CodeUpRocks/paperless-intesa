@@ -100,4 +100,20 @@ export class DocumentsService {
     );
     this.documents$.next(docs);
   }
+
+  errorOcured() {
+    const docs: IntesaDocument[] = this.documents$.value.reduce(
+      (acc: IntesaDocument[], curr: IntesaDocument) => {
+        if (curr.type === DocumentType.FOR_SIGNING) {
+          const doc: IntesaDocument = { ...curr, state: DocumentState.ERROR };
+          acc.push(doc);
+        } else {
+          acc.push(curr);
+        }
+        return acc;
+      },
+      []
+    );
+    this.documents$.next(docs);
+  }
 }

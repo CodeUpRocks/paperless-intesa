@@ -44,7 +44,8 @@ export class InitialStepComponent implements OnInit {
       this.futureSteps.push({
         title: 'Potpisivanje dokumenta',
         // imageUrl: 'assets/icons/potpisivanje-dokumenta-icon.svg',
-        description: '',
+        description:
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       });
       this.title =
         'Potrebno je da pregledate, prihvatite i potpišete dokument/a u nastavku';

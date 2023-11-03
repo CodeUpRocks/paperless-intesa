@@ -30,6 +30,7 @@
 
     &.disabled {
       color: #cacaca;
+      filter: grayscale(1);
     }
 
     .step-number {

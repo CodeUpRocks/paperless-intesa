@@ -87,8 +87,10 @@
 
 .rotated-image {
   transform: rotate(90deg);
+  transition: all 0.3s;
 }
 
 .image {
   transform: rotate(-90deg);
+  transition: all 0.3s;
 }

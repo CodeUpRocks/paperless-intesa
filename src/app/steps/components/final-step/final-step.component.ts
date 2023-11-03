@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProcessState } from '@models/document.model';
+import { StepService } from 'src/app/services/step.service';
 
 const iconsUrl = {
-  [ProcessState.ERROR]: 'assets/icons/error.svg',
+  [ProcessState.ERROR]: 'assets/icons/error-icon.svg',
   [ProcessState.SUCCESS]: 'assets/icons/success-icon.svg',
 };
 
@@ -11,8 +12,15 @@ const iconsUrl = {
   templateUrl: './final-step.component.html',
   styleUrls: ['./final-step.component.scss'],
 })
-export class FinalStepComponent {
-  @Input() state: ProcessState = ProcessState.SUCCESS;
+export class FinalStepComponent implements OnInit {
+  state: ProcessState;
+  constructor(private _stepService: StepService) {}
+
+  ngOnInit(): void {
+    this._stepService.currentProcessState.subscribe(state => {
+      this.state = state;
+    });
+  }
 
   get imageSrc() {
     return iconsUrl[this.state];
@@ -20,7 +28,7 @@ export class FinalStepComponent {
   get title() {
     return this.state === ProcessState.SUCCESS
       ? 'Potpisivanje uspešno završeno!'
-      : 'Nešto nije u redu';
+      : 'DOŠLO JE DO GREŠKE PRILIKOM POTPISIVANJA!';
   }
   get text() {
     return this.state === ProcessState.SUCCESS

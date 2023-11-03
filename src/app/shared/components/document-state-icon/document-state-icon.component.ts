@@ -12,6 +12,7 @@ const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
     [DocumentState.COMPLETED]: 'assets/icons/sign-completed.svg',
     [DocumentState.ACTIVE]: 'assets/icons/sign-active.svg',
     [DocumentState.WAITING]: 'assets/icons/sign-waiting.svg',
+    [DocumentState.ERROR]: 'assets/icons/document-error.svg',
   },
 };
 

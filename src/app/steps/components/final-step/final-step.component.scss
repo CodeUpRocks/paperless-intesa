@@ -6,4 +6,10 @@
   align-items: center;
   gap: 40px;
   padding-top: 80px;
+
+  .error-text-color {
+    ::ng-deep .text-wrapper h1 {
+      color: #f00 !important;
+    }
+  }
 }

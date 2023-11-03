@@ -32,7 +32,7 @@
     <button class="arrow-button" (click)="accordionAction()">
       <img
         id="arrow"
-        class="image"
+        [ngClass]="showAccordionBody ? 'rotated-image' : 'image'"
         src="assets/icons/arrow-left.svg"
         alt="edit-icon"
       />

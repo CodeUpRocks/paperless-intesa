@@ -21,9 +21,6 @@
   }
 
   div.document-wrapper {
-    gap: 30px;
-    margin-bottom: 35px;
-    justify-content: start;
     flex: 0;
   }
 
@@ -38,7 +35,7 @@
 
   ul {
     column-count: 2;
-    column-gap: 0;
+    column-gap: 30px;
     -webkit-columns: 2;
     -moz-columns: 2;
   }
@@ -46,6 +43,6 @@
   li {
     list-style: none;
     margin-bottom: 30px;
-    margin-right: 30px;
+    width: 100%;
   }
 }

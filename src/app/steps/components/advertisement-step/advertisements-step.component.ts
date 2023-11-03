@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProcessSteps } from '@models/document.model';
+import { ProcessState, ProcessSteps } from '@models/document.model';
 import { hasChangings } from '@shared/utils/document.utils';
 import { DocumentsService } from 'src/app/services/documents.service';
 import { StepService } from 'src/app/services/step.service';
@@ -28,8 +28,10 @@ export class AdvertisementStepComponent implements OnInit {
     setTimeout(() => {
       if (this.hasChangings) {
         location.reload();
-        // this._stepService.goToNextProcessStep(ProcessSteps.INITIALSTEP);
       } else {
+        // this._documentsService.errorOcured();
+        // this._stepService.currentProcessState.next(ProcessState.ERROR); ///error
+        this._stepService.currentProcessState.next(ProcessState.SUCCESS); ///success
         this._stepService.goToNextProcessStep(ProcessSteps.FINALSTEP);
       }
     }, 3000);
