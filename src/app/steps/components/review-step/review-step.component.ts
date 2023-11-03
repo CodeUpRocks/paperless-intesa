@@ -59,6 +59,13 @@ export class ReviewStepComponent implements OnInit, OnDestroy {
     this._stepService.currentDocumentStep.next(DocumentStep.ACCEPTANCE);
   }
 
+  scrollToBottom() {
+    this.pdfViewer?.nativeElement?.scrollTo({
+      top: this.pdfViewer?.nativeElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  }
+
   onAccept() {
     this._stepService.currentDocumentStep.next(DocumentStep.REVIEW);
     this._documentsService.updateDocumentStatus(

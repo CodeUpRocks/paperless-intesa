@@ -12,6 +12,10 @@
       [fit-to-page]="fit"
       (page-rendered)="pageRendered($event)"
     ></pdf-viewer>
+
+    <button (click)="scrollToBottom()" type="button" class="scroll-to-bottom">
+      <img src="/assets/icons/scroll-down-icon.svg" alt="scroll-down-icon" />
+    </button>
   </div>
 </div>
 
