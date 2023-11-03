@@ -1,2 +1,17 @@
-<img src="assets/icons/document-preview.svg" />
-<span class="name">{{ name }}</span>
+<div class="doc-review-wrapper">
+  <div class="doc-review-details">
+    <img
+      class="document-icon-review"
+      src="assets/icons/pregled-dokumenta.svg"
+      alt="pregled-dokumenta"
+    />
+    <p>{{ documentTitle }}</p>
+  </div>
+  <button class="eye-button" (click)="openDocument.emit()">
+    <img
+      class="document-icon-review"
+      src="assets/icons/eye-icon.svg"
+      alt="eye-icon"
+    />
+  </button>
+</div>

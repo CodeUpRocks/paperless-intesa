@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-document-view-item',
@@ -12,12 +6,7 @@ import {
   styleUrls: ['./document-view-item.component.scss'],
 })
 export class DocumentViewItemComponent {
-  @Input() name: string;
+  @Input() documentTitle = '';
 
   @Output() openDocument = new EventEmitter<void>();
-
-  @HostListener('click')
-  onClick() {
-    this.openDocument.emit();
-  }
 }

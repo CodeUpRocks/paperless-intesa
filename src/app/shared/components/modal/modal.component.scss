@@ -1,5 +1,5 @@
 .modal {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(217, 217, 217, 0.77);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -13,8 +13,6 @@
 
 .modal-header {
   margin-bottom: 10px;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .button {
@@ -30,14 +28,25 @@
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  height: 700px;
-  width: 80%;
+  height: 95%;
+  width: 95%;
+  border-radius: 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+
 }
 
 .pdf-viewer {
-  height: 650px;
+  height: 100%;
   overflow: auto;
+  padding-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
 }

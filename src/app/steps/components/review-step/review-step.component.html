@@ -16,16 +16,16 @@
 </div>
 
 <div class="actions">
-  <app-button [disabled]="actionsDisabled" (buttonClick)="onChange()">
-    <img src="assets/icons/edit-icon.svg" alt="edit-icon" />
-    <span>Izmenite</span>
-  </app-button>
   <app-button
     color="secondary"
     [disabled]="actionsDisabled"
-    (buttonClick)="onAccept()"
+    (buttonClick)="onChange()"
   >
-    <img src="assets/icons/check-icon.svg" alt="check-icon" />
+    <img src="assets/icons/arrow-left.svg" alt="arrow-left" />
+    <span>Izmenite</span>
+  </app-button>
+  <app-button [disabled]="actionsDisabled" (buttonClick)="onAccept()">
     <span>Prihvatite</span>
+    <img src="assets/icons/arrow-right.svg" alt="arrow-right" />
   </app-button>
 </div>

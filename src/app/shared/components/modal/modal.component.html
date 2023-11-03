@@ -1,9 +1,7 @@
 <div class="modal">
   <div class="modal-content">
     <div class="modal-header">
-      <div class="button" (click)="onCloseModal()">
-        <img src="assets/icons/x-icon.svg" />
-      </div>
+      <h2>{{ document.name }}</h2>
     </div>
     <div class="pdf-viewer">
       <pdf-viewer
@@ -15,6 +13,11 @@
       >
         (page-rendered)="pageRendered($event)" ></pdf-viewer
       >
+    </div>
+    <div class="modal-footer">
+      <app-button [color]="'primary'" (buttonClick)="onCloseModal()">
+        Zatvori
+      </app-button>
     </div>
   </div>
 </div>

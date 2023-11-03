@@ -10,6 +10,7 @@ import { FutureStepsWrapperComponent } from './future-steps-wrapper/future-steps
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TextCardComponent } from './text-card/text-card.component';
 import { ModalComponent } from './modal/modal.component';
+import { AccordionComponent } from './accordion/accordion.component';
 
 export const components = [
   DocumentStateIconComponent,
@@ -23,6 +24,7 @@ export const components = [
   TextCardComponent,
   DocumentViewItemComponent,
   ModalComponent,
+  AccordionComponent,
 ];
 
 export { ButtonComponent } from './button/button.component';
@@ -36,3 +38,4 @@ export { ProgressBarComponent } from './progress-bar/progress-bar.component';
 export { TextCardComponent } from './text-card/text-card.component';
 export { DocumentViewItemComponent } from './document-view-item/document-view-item.component';
 export { ModalComponent } from './modal/modal.component';
+export { AccordionComponent } from './accordion/accordion.component';

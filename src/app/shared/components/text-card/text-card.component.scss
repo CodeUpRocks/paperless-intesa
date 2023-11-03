@@ -1,9 +1,15 @@
 :host {
-  // width: 65%;
-  width: 90%;
+  width: 65%;
+  // width: 90%;
   margin: 0 auto;
   text-align: center;
   margin-bottom: 35px;
+
+  .text-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
   .text-wrapper {
     display: flex;
@@ -12,9 +18,11 @@
 
   h1 {
     max-width: 600px;
+    color: #ea600e;
+    font-weight: 800;
   }
 
-  p{
+  p {
     max-width: 775px;
   }
 }

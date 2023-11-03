@@ -1,10 +1,10 @@
-<h2>Naredni koraci</h2>
+<h2>NAREDNI KORACI</h2>
 
 <div class="steps">
-  <span *ngIf="steps.length > 1" class="step-connection-line"></span>
-  <app-future-step
-    *ngFor="let step of steps"
-    [imageUrl]="step.imageUrl"
-    [title]="step.title"
-  ></app-future-step>
+  <app-accordion
+    *ngFor="let step of steps; let i = index"
+    [stepTitle]="step.title"
+    [stepDescription]="step.description"
+    [stepNumber]="i + 1"
+  ></app-accordion>
 </div>

@@ -7,16 +7,17 @@
   flex-direction: column;
 
   & > h2 {
-    font-size: 26px;
+    font-size: 20px;
     line-height: normal;
-    color: #ea600e;
+    color: #4D4C4C;
     margin-bottom: 35px;
+    font-weight: 600;
   }
 
   .steps {
     display: flex;
-    flex-direction: row;
-    gap: 50px;
+    flex-direction: column;
+    gap: 20px;
     position: relative;
 
     .step-connection-line {

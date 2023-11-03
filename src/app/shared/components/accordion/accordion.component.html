@@ -1,0 +1,46 @@
+<div class="accordion">
+  <div class="panel">
+    <div class="content-wrapper">
+      <div class="counter">{{ stepNumber }}</div>
+
+      <div [ngSwitch]="stepNumber" class="image-div">
+        <ng-container *ngSwitchCase="documentSteps.REVIEW">
+          <img
+            class="document-icon-review"
+            src="assets/icons/pregled-dokumenta-icon.svg"
+            alt="edit-icon"
+          />
+        </ng-container>
+        <ng-container *ngSwitchCase="documentSteps.ACCEPTANCE">
+          <img
+            class="document-icon-accept"
+            src="assets/icons/prihvatanje-dokumenta-icon.svg"
+            alt="edit-icon"
+          />
+        </ng-container>
+        <ng-container *ngSwitchCase="documentSteps.SIGNING">
+          <img
+            class="document-icon-sign"
+            src="assets/icons/potpisivanje-dokumenta-icon.svg"
+            alt="edit-icon"
+          />
+        </ng-container>
+      </div>
+
+      <div>{{ stepTitle }}</div>
+    </div>
+    <button class="arrow-button" (click)="accordionAction()">
+      <img
+        id="arrow"
+        class="image"
+        src="assets/icons/arrow-left.svg"
+        alt="edit-icon"
+      />
+    </button>
+  </div>
+  <div *ngIf="showAccordionBody && !!stepDescription" class="panel-detail">
+    <p>
+      {{ stepDescription }}
+    </p>
+  </div>
+</div>

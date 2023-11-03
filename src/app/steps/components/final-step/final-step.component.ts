@@ -3,7 +3,7 @@ import { ProcessState } from '@models/document.model';
 
 const iconsUrl = {
   [ProcessState.ERROR]: 'assets/icons/error.svg',
-  [ProcessState.SUCCESS]: 'assets/icons/success.svg',
+  [ProcessState.SUCCESS]: 'assets/icons/success-icon.svg',
 };
 
 @Component({
