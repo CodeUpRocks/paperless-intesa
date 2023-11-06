@@ -3,17 +3,30 @@
     <div class="modal-header">
       <h2>{{ document.name }}</h2>
     </div>
-    <div class="pdf-viewer">
-      <pdf-viewer
-        [src]="pdfSrc"
-        [render-text]="true"
-        [original-size]="false"
-        [fit-to-page]="fit"
-        style="display: block; min-height: 250px"
-      >
-        (page-rendered)="pageRendered($event)" ></pdf-viewer
-      >
+
+    <div class="pdf-wrapper">
+      <div #pdfViewer class="pdf-viewer" appScrollTracker>
+        <pdf-viewer
+          [src]="pdfSrc"
+          [render-text]="true"
+          [original-size]="false"
+          [fit-to-page]="fit"
+          (page-rendered)="pageRendered($event)"
+        ></pdf-viewer>
+
+        <button
+          (click)="scrollToBottom()"
+          type="button"
+          class="scroll-to-bottom"
+        >
+          <img
+            src="/assets/icons/scroll-down-icon.svg"
+            alt="scroll-down-icon"
+          />
+        </button>
+      </div>
     </div>
+
     <div class="modal-footer">
       <app-button [color]="'primary'" (buttonClick)="onCloseModal()">
         Zatvori

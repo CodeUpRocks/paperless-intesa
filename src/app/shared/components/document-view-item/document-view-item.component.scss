@@ -1,5 +1,4 @@
 .doc-review-wrapper {
-  width: 392px;
   height: 70px;
   border-radius: 22px;
   background: #fff;
@@ -8,6 +7,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
+  gap: 50px;
 }
 
 .doc-review-details {

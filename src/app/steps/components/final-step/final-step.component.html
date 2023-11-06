@@ -1,6 +1,9 @@
-<img style="display: block" class="icon" [src]="imageSrc" />
+<div class="background-image-wrapper"></div>
+
+<img style="display: block; z-index: 1" class="icon" [src]="imageSrc" />
 <app-text-card
   [ngClass]="state === 'ERROR' ? 'error-text-color' : ''"
   [title]="title"
   [text]="text"
+  style="z-index: 1"
 ></app-text-card>

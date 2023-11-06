@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IntesaDocument } from '@models/document.model';
 
 @Component({
@@ -12,6 +20,7 @@ export class ModalComponent implements OnInit {
   isModalOpen = false;
   fit = false;
   pdfSrc: any = '';
+  @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
   ngOnInit(): void {
     this.pdfSrc = this.document.documentUrl;
@@ -23,5 +32,12 @@ export class ModalComponent implements OnInit {
 
   pageRendered(event: any) {
     this.fit = true;
+  }
+
+  scrollToBottom() {
+    this.pdfViewer?.nativeElement?.scrollTo({
+      top: this.pdfViewer?.nativeElement.scrollHeight,
+      behavior: 'smooth',
+    });
   }
 }

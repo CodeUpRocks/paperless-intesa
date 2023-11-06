@@ -1,6 +1,11 @@
-<app-text-card [title]="title" [text]="text"></app-text-card>
+<div></div>
 
-<app-future-steps-wrapper [steps]="futureSteps"></app-future-steps-wrapper>
+<app-text-card style="z-index: 1" [title]="title" [text]="text"></app-text-card>
+
+<app-future-steps-wrapper
+  style="z-index: 1"
+  [steps]="futureSteps"
+></app-future-steps-wrapper>
 
 <app-button style="margin: 20px auto 0" (buttonClick)="getStarted()"
   >Započnite</app-button

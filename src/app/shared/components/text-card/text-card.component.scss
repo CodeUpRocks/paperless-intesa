@@ -4,10 +4,12 @@
   margin: 0 auto;
   text-align: center;
   margin-bottom: 30px;
-
+  margin-top: 50px;
+  
   .text-card-wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
   }
 
@@ -19,10 +21,12 @@
   h1 {
     max-width: 600px;
     color: #ea600e;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 22px;
   }
 
   p {
     max-width: 775px;
+    font-size: 14px;
   }
 }
