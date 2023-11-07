@@ -13,9 +13,8 @@
     </button>
   </div>
 
-  <!-- TODO: Create an avatar component -->
   <div *ngIf="!!user" class="user-wrapper">
-    <span class="avatar">LP</span>
+    <app-avatar [fullName]="user.fullName"></app-avatar>
     <span class="name">{{ user.fullName }}</span>
   </div>
 

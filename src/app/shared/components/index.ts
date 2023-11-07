@@ -9,6 +9,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TextCardComponent } from './text-card/text-card.component';
 import { ModalComponent } from './modal/modal.component';
 import { AccordionComponent } from './accordion/accordion.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 export const components = [
   DocumentStatusIconComponent,
@@ -22,6 +23,7 @@ export const components = [
   DocumentViewItemComponent,
   ModalComponent,
   AccordionComponent,
+  AvatarComponent,
 ];
 
 export { ButtonComponent } from './button/button.component';
@@ -35,3 +37,4 @@ export { TextCardComponent } from './text-card/text-card.component';
 export { DocumentViewItemComponent } from './document-view-item/document-view-item.component';
 export { ModalComponent } from './modal/modal.component';
 export { AccordionComponent } from './accordion/accordion.component';
+export { AvatarComponent } from './avatar/avatar.component';

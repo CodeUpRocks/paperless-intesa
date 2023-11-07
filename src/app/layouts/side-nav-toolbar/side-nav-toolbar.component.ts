@@ -13,7 +13,7 @@ export class SideNavToolbarComponent implements OnInit {
   @Input() user: User;
 
   @HostBinding('class.collapsed')
-  collapsed = true;
+  collapsed = false;
 
   documentsForReview$: Observable<IntesaDocument[]>;
   documentsForSigning$: Observable<IntesaDocument[]>;
