@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IntesaDocument } from '@models/document.model';
 import { User } from '@models/user.model';
-import { StepService } from './services/step.service';
-import { ProcessSteps } from '@models/document.model';
+import { Observable } from 'rxjs';
 import { DocumentsService } from './services/documents.service';
 
 @Component({
@@ -11,19 +11,13 @@ import { DocumentsService } from './services/documents.service';
 })
 export class AppComponent implements OnInit {
   user: User = { fullName: 'Lola Ponorac' };
-  currentStep: any;
-  steps = ProcessSteps;
+  documents$: Observable<IntesaDocument[]>;
+  documents: IntesaDocument[];
 
-  constructor(
-    private stepService: StepService,
-    private _documentsService: DocumentsService
-  ) {}
+  constructor(private _documentsService: DocumentsService) {}
 
   ngOnInit(): void {
     this._documentsService.getAllDocuments$().subscribe();
-
-    this.stepService.currentProcessStep.subscribe(
-      step => (this.currentStep = step)
-    );
+    this.documents$ = this._documentsService.getDocuments$();
   }
 }

@@ -7,7 +7,7 @@
       <ul>
         <li *ngFor="let item of documentsForSigning">
           <app-document-view-item
-            [documentTitle]="item.name"
+            [documentTitle]="item.documentName"
             (openDocument)="onClick(item)"
           ></app-document-view-item>
         </li>

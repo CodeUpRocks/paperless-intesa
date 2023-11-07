@@ -1,0 +1,39 @@
+<app-side-nav-toolbar
+  *ngIf="currentStep !== steps.WAITING"
+  [user]="user"
+></app-side-nav-toolbar>
+
+<app-advertisements-step
+  *ngIf="currentStep === steps.WAITING"
+  [title]="waitingStepTitle"
+></app-advertisements-step>
+
+<main class="content">
+  <app-progress-bar
+    *ngIf="currentStep !== steps.INITIALSTEP && currentStep !== steps.WAITING"
+  ></app-progress-bar>
+
+  <section class="steps">
+    <app-initial-step
+      [type]="iniitalStepType"
+      (startProcess)="handleStartProcess()"
+      *ngIf="currentStep === steps.INITIALSTEP"
+    ></app-initial-step>
+
+    <app-review-step
+      (accepted)="accepted.emit($event)"
+      (changeRequested)="changeRequested.emit($event)"
+      *ngIf="currentStep === steps.REVIEWSTEP"
+    ></app-review-step>
+
+    <app-preview-sign-step
+      *ngIf="currentStep === steps.PREVIEWSTEP"
+    ></app-preview-sign-step>
+
+    <app-final-step
+      *ngIf="currentStep === steps.FINALSTEP"
+      [state]="finalProcesState"
+      [title]="finalProcesTitle"
+    ></app-final-step>
+  </section>
+</main>

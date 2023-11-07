@@ -14,7 +14,7 @@
   </div>
 
   <!-- TODO: Create an avatar component -->
-  <div class="user-wrapper">
+  <div *ngIf="!!user" class="user-wrapper">
     <span class="avatar">LP</span>
     <span class="name">{{ user.fullName }}</span>
   </div>

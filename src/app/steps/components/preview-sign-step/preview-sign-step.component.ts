@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentState, ProcessSteps } from '@models/document.model';
+import { DocumentStatus } from '@models/document.model';
 import { DocumentsService } from 'src/app/services/documents.service';
 import { StepService } from 'src/app/services/step.service';
 
@@ -28,8 +28,7 @@ export class PreviewSignStepComponent implements OnInit {
   }
 
   onAccept() {
-    this._documentsService.acceptSignDocument(DocumentState.COMPLETED);
-    this._stepService.goToNextProcessStep(ProcessSteps.WAITING);
+    this._documentsService.acceptSignDocument(DocumentStatus.QESInitiated);
   }
 
   onClick(event: any) {

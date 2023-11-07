@@ -12,23 +12,12 @@ const iconsUrl = {
   templateUrl: './final-step.component.html',
   styleUrls: ['./final-step.component.scss'],
 })
-export class FinalStepComponent implements OnInit {
-  state: ProcessState;
-  constructor(private _stepService: StepService) {}
-
-  ngOnInit(): void {
-    this._stepService.currentProcessState.subscribe(state => {
-      this.state = state;
-    });
-  }
+export class FinalStepComponent {
+  @Input() title: string;
+  @Input() state: ProcessState = ProcessState.SUCCESS;
 
   get imageSrc() {
     return iconsUrl[this.state];
-  }
-  get title() {
-    return this.state === ProcessState.SUCCESS
-      ? 'Potpisivanje uspešno završeno!'
-      : 'DOŠLO JE DO GREŠKE PRILIKOM POTPISIVANJA!';
   }
   get text() {
     return this.state === ProcessState.SUCCESS

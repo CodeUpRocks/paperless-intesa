@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { DocumentState, DocumentType } from '@models/document.model';
+import { DocumentStatus, DocumentType } from '@models/document.model';
 
-const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
+const icons: Record<DocumentType, { [key in DocumentStatus]?: string }> = {
   [DocumentType.FOR_REVIEW]: {
-    [DocumentState.INITIAL]: 'assets/icons/review-initial.svg',
-    [DocumentState.COMPLETED]: 'assets/icons/review-completed.svg',
-    [DocumentState.ACTIVE]: 'assets/icons/review-active.svg',
+    [DocumentStatus.INITIAL]: 'assets/icons/review-initial.svg',
+    [DocumentStatus.ACCEPTED]: 'assets/icons/review-completed.svg',
+    [DocumentStatus.VIEWING]: 'assets/icons/review-active.svg',
   },
   [DocumentType.FOR_SIGNING]: {
-    [DocumentState.INITIAL]: 'assets/icons/sign-initial.svg',
-    [DocumentState.COMPLETED]: 'assets/icons/sign-completed.svg',
-    [DocumentState.ACTIVE]: 'assets/icons/sign-active.svg',
-    [DocumentState.WAITING]: 'assets/icons/sign-waiting.svg',
-    [DocumentState.ERROR]: 'assets/icons/document-error.svg',
+    [DocumentStatus.INITIAL]: 'assets/icons/sign-initial.svg',
+    [DocumentStatus.QESSigned]: 'assets/icons/sign-completed.svg',
+    [DocumentStatus.VIEWING]: 'assets/icons/sign-active.svg',
+    [DocumentStatus.QESRequested]: 'assets/icons/sign-waiting.svg',
+    [DocumentStatus.QESRejected]: 'assets/icons/document-error.svg',
   },
 };
 
@@ -29,12 +29,13 @@ const icons: Record<DocumentType, { [key in DocumentState]?: string }> = {
     `,
   ],
 })
-export class DocumentStateIconComponent {
-  @Input() state: DocumentState = DocumentState.INITIAL;
-  @Input() type: DocumentType = DocumentType.FOR_REVIEW;
-  @Input() active = false;
+export class DocumentStatusIconComponent {
+  @Input() state: DocumentStatus = DocumentStatus.INITIAL;
+  @Input() type = false; //false -> FOR_REVIEW; true -> FOR_SIGN
 
   get imageSrc() {
-    return icons[this.type][this.active ? DocumentState.ACTIVE : this.state];
+    return icons[
+      !this.type ? DocumentType.FOR_REVIEW : DocumentType.FOR_SIGNING
+    ][this.state];
   }
 }

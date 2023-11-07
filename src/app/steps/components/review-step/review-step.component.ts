@@ -1,19 +1,12 @@
 import {
   Component,
   ElementRef,
-  OnDestroy,
+  EventEmitter,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
-import {
-  DocumentState,
-  DocumentStep,
-  DocumentType,
-  IntesaDocument,
-  ProcessSteps,
-} from '@models/document.model';
-import { hasSigns } from '@shared/utils/document.utils';
-import { Subject, takeUntil } from 'rxjs';
+import { DocumentStatus, DocumentStep } from '@models/document.model';
 import { DocumentsService } from 'src/app/services/documents.service';
 import { StepService } from 'src/app/services/step.service';
 
@@ -22,13 +15,15 @@ import { StepService } from 'src/app/services/step.service';
   templateUrl: './review-step.component.html',
   styleUrls: ['./review-step.component.scss'],
 })
-export class ReviewStepComponent implements OnInit, OnDestroy {
-  document: IntesaDocument;
-  documents = this._documentsService.getDocumentsValue();
-  pdfSrc: any = '';
+export class ReviewStepComponent implements OnInit {
+  document: any;
+  pdfSrc = '';
   fit = false;
   actionsDisabled = true;
-  destroy$ = new Subject();
+
+  @Output() accepted = new EventEmitter<number | string>();
+  @Output() changeRequested = new EventEmitter<number | string>();
+
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -37,24 +32,20 @@ export class ReviewStepComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._documentsService
-      .getCurrentDocumentObservable$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(document => {
-        this.document = document;
-        this.pdfSrc = document?.documentUrl;
-        this.pdfViewer?.nativeElement?.scrollTo(0, 0);
-        if (!document) {
-          this.goToNextStep();
-        }
-      });
+    this._documentsService.getDocuments$().subscribe(data => {
+      this.document = data.find(
+        document => document.documentStatus === DocumentStatus.VIEWING
+      );
+      this.pdfSrc = this.document?.documentUrl;
+      this.pdfViewer?.nativeElement?.scrollTo(0, 0);
+    });
   }
 
-  pageRendered(event: any) {
+  pageRendered() {
     this.fit = true;
   }
 
-  onScroll(event: any) {
+  onScroll() {
     this.actionsDisabled = false;
     this._stepService.currentDocumentStep.next(DocumentStep.ACCEPTANCE);
   }
@@ -67,31 +58,26 @@ export class ReviewStepComponent implements OnInit, OnDestroy {
   }
 
   onAccept() {
+    this.accepted.emit(this.document.changesetID);
+
     this._stepService.currentDocumentStep.next(DocumentStep.REVIEW);
+
+    // This will be moved to app component
     this._documentsService.updateDocumentStatus(
-      this.document?.type === DocumentType.FOR_REVIEW
-        ? DocumentState.COMPLETED
-        : DocumentState.WAITING
+      !this.document?.clientQESRequired
+        ? DocumentStatus.ACCEPTED
+        : DocumentStatus.QESRequested
     );
+
     this.actionsDisabled = true;
   }
 
   onChange() {
-    this._documentsService.updateDocumentStatus(DocumentState.CHANGING);
-    this._stepService.goToNextProcessStep(ProcessSteps.WAITING);
-  }
+    this.changeRequested.emit(this.document.changesetID);
 
-  goToNextStep() {
-    this._stepService.goToNextProcessStep(
-      hasSigns(this.documents)
-        ? ProcessSteps.PREVIEWSTEP
-        : ProcessSteps.FINALSTEP
+    // This will be moved to app component
+    this._documentsService.updateDocumentStatus(
+      DocumentStatus.CHANGE_REQUESTED
     );
-    this._stepService.currentDocumentStep.next(DocumentStep.SIGNING);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

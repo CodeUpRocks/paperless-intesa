@@ -1,10 +1,12 @@
-export enum DocumentState {
-  INITIAL = 'INITIAL',
-  COMPLETED = 'COMPLETED',
-  ERROR = 'ERROR',
-  WAITING = 'WAITING',
-  CHANGING = 'CHANGING',
-  ACTIVE = 'ACTIVE',
+export enum DocumentStatus {
+  INITIAL = 1,
+  VIEWING = 2,
+  ACCEPTED = 3,
+  CHANGE_REQUESTED = 4,
+  QESInitiated = 5,
+  QESRequested = 6,
+  QESSigned = 7,
+  QESRejected = 8,
 }
 
 export enum DocumentStep {
@@ -32,10 +34,16 @@ export enum ProcessSteps {
 }
 
 export interface IntesaDocument {
-  id: number;
-  name: string;
-  state: DocumentState; // Track different states for a document
-  type: DocumentType; // Determine which kind of document it is
+  changesetID: number;
+  documentName: string;
+  order: number;
+  clientQESRequired: boolean;
+  bankQESRequired: boolean;
+  changeButtonVisible: boolean;
+  acceptButtonVisible: boolean;
+  documentStatus: DocumentStatus;
+  processId: number;
+  processStatusId: number;
   documentUrl: string;
   index?: number;
 }

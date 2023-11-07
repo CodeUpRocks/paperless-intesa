@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  DocumentState,
-  DocumentType,
-  IntesaDocument,
-} from '@models/document.model';
-import { BehaviorSubject, forkJoin, map, of, tap } from 'rxjs';
+import { DocumentStatus, IntesaDocument } from '@models/document.model';
+import { BehaviorSubject, forkJoin, map, of } from 'rxjs';
 import {
   DOCUMENTS_FOR_REVIEW,
   DOCUMENTS_TO_SIGN,
@@ -13,10 +9,9 @@ import {
 @Injectable({ providedIn: 'root' })
 export class DocumentsService {
   private documents$ = new BehaviorSubject<IntesaDocument[]>([]);
-  private currentDocumentIndex$ = new BehaviorSubject<number>(-1);
-  private currentDocument$ = new BehaviorSubject<any>({});
+  private currentDocumentIndex = -1;
 
-  getDocumentsObservable$() {
+  getDocuments$() {
     return this.documents$.asObservable();
   }
 
@@ -24,72 +19,87 @@ export class DocumentsService {
     return this.documents$.value;
   }
 
-  getAllDocuments$() {
-    return forkJoin([of(DOCUMENTS_FOR_REVIEW), of(DOCUMENTS_TO_SIGN)]).pipe(
-      tap(([dataForReview, dataForSign]) => {
-        const documents = [...dataForReview, ...dataForSign].map(
-          (data, index) => {
-            return { ...data, index };
-          }
-        );
-        this.documents$.next(documents);
-      })
-    );
-  }
-
   getDocumentsForReview$() {
     return this.documents$.pipe(
       map(documents =>
-        documents.filter(document => document.type === DocumentType.FOR_REVIEW)
+        documents.filter(document => !document.clientQESRequired)
       )
     );
   }
 
   getDocumentsForSign$() {
     return this.documents$.pipe(
-      map(documents =>
-        documents.filter(document => document.type === DocumentType.FOR_SIGNING)
-      )
+      map(documents => documents.filter(document => document.clientQESRequired))
     );
   }
 
-  getCurrentDocumentIndexObservable$() {
-    return this.currentDocumentIndex$.asObservable();
+  /**
+   * Handled inside app component
+   */
+  getAllDocuments$() {
+    return forkJoin([of(DOCUMENTS_FOR_REVIEW), of(DOCUMENTS_TO_SIGN)]).pipe(
+      map(([dataForReview, dataForSign]) => {
+        const documents = [...dataForReview, ...dataForSign].map(
+          (data, index) => {
+            return { ...data, index };
+          }
+        );
+        this.documents$.next([...documents]);
+        return documents;
+      })
+    );
   }
 
-  getCurrentDocumentIndexValue() {
-    return this.currentDocumentIndex$.value;
-  }
-  getCurrentDocumentObservable$() {
-    return this.currentDocument$.asObservable();
-  }
-
-  getCurrentDocumentValue() {
-    return this.currentDocument$.value;
-  }
-
-  updateDocumentStatus(state: DocumentState) {
+  /**
+   * Handled inside app component
+   */
+  updateDocumentStatus(documentStatus: DocumentStatus) {
     const docs = [...this.documents$.value];
-    docs[this.currentDocumentIndex$.value] = {
-      ...docs[this.currentDocumentIndex$.value],
-      state,
+    docs[this.currentDocumentIndex] = {
+      ...docs[this.currentDocumentIndex],
+      documentStatus: documentStatus,
     };
-    this.documents$.next(docs);
-    this.goToNextDocument();
+    this.documents$.next([...docs]);
+    if (!(documentStatus === DocumentStatus.CHANGE_REQUESTED)) {
+      this.goToNextDocument();
+    }
   }
 
+  /**
+   * Handled inside app component
+   */
   goToNextDocument() {
-    const currIndex = this.currentDocumentIndex$.value + 1;
-    const documents = this.documents$.value;
-    this.currentDocumentIndex$.next(documents[currIndex] ? currIndex : -1);
-    this.currentDocument$.next(documents[currIndex]);
+    const currIndex = this.documents$.value.findIndex(
+      document => document.documentStatus == DocumentStatus.INITIAL
+    );
+
+    if (currIndex < 0) {
+      this.setCurrentIndex(-1);
+      return;
+    }
+
+    const documents = [...this.documents$.value];
+    const documentStatus = DocumentStatus.VIEWING;
+    documents[currIndex] = {
+      ...documents[currIndex],
+      documentStatus,
+    };
+    this.documents$.next([...documents]);
+    this.setCurrentIndex(currIndex);
   }
 
-  acceptSignDocument(state: DocumentState) {
+  setCurrentIndex(index: number) {
+    this.currentDocumentIndex = index;
+  }
+
+  /**
+   * Handled inside app component
+   */
+  acceptSignDocument(documentStatus: DocumentStatus) {
     const docs: IntesaDocument[] = this.documents$.value.reduce(
       (acc: IntesaDocument[], curr: IntesaDocument) => {
-        if (curr.type === DocumentType.FOR_SIGNING) {
-          const doc: IntesaDocument = { ...curr, state };
+        if (curr.clientQESRequired) {
+          const doc: IntesaDocument = { ...curr, documentStatus };
           acc.push(doc);
         } else {
           acc.push(curr);
@@ -98,14 +108,20 @@ export class DocumentsService {
       },
       []
     );
-    this.documents$.next(docs);
+    this.documents$.next([...docs]);
   }
 
+  /**
+   * Handled inside app component
+   */
   errorOcured() {
     const docs: IntesaDocument[] = this.documents$.value.reduce(
       (acc: IntesaDocument[], curr: IntesaDocument) => {
-        if (curr.type === DocumentType.FOR_SIGNING) {
-          const doc: IntesaDocument = { ...curr, state: DocumentState.ERROR };
+        if (curr.clientQESRequired) {
+          const doc: IntesaDocument = {
+            ...curr,
+            documentStatus: DocumentStatus.QESRejected,
+          };
           acc.push(doc);
         } else {
           acc.push(curr);
@@ -114,6 +130,6 @@ export class DocumentsService {
       },
       []
     );
-    this.documents$.next(docs);
+    this.documents$.next([...docs]);
   }
 }

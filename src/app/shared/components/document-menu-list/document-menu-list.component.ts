@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DocumentState, IntesaDocument } from '@models/document.model';
-import { Subject, map, takeUntil, tap } from 'rxjs';
+import { DocumentStatus, IntesaDocument } from '@models/document.model';
+import { Subject, map, takeUntil } from 'rxjs';
 import { DocumentsService } from 'src/app/services/documents.service';
 
 @Component({
@@ -11,7 +11,6 @@ import { DocumentsService } from 'src/app/services/documents.service';
 export class DocumentMenuListComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() documents: IntesaDocument[];
-  currentIndex: number;
   documentsLeft: number;
   unSubscribe$: Subject<any> = new Subject<any>();
 
@@ -19,20 +18,26 @@ export class DocumentMenuListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._documentsService
-      .getCurrentDocumentIndexObservable$()
-      .subscribe(index => {
-        this.currentIndex = index;
-      });
-
-    this._documentsService
-      .getDocumentsObservable$()
+      .getDocuments$()
       .pipe(
         takeUntil(this.unSubscribe$),
         map(data => {
           const reducedDocuments = this.documents.reduce(
             (acc: IntesaDocument[], currenDoc: IntesaDocument) => {
-              const doc = data.find(document => document.id === currenDoc.id);
-              if (doc?.state === DocumentState.COMPLETED) {
+              const doc = data.find(
+                document => document.changesetID === currenDoc.changesetID
+              );
+              if (
+                !doc?.clientQESRequired &&
+                doc?.documentStatus === DocumentStatus.ACCEPTED
+              ) {
+                acc.push(doc);
+              }
+
+              if (
+                doc?.clientQESRequired &&
+                doc?.documentStatus === DocumentStatus.QESSigned
+              ) {
                 acc.push(doc);
               }
 
@@ -48,7 +53,7 @@ export class DocumentMenuListComponent implements OnInit, OnDestroy {
   }
 
   trackByFn(index: number, document: IntesaDocument) {
-    return document.id;
+    return document.changesetID;
   }
 
   ngOnDestroy(): void {

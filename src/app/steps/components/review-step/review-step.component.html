@@ -1,16 +1,11 @@
 <div class="pdf-wrapper">
-  <div
-    #pdfViewer
-    class="pdf-viewer"
-    appScrollTracker
-    (scrolled)="onScroll($event)"
-  >
+  <div #pdfViewer class="pdf-viewer" appScrollTracker (scrolled)="onScroll()">
     <pdf-viewer
       [src]="pdfSrc"
       [render-text]="true"
       [original-size]="false"
       [fit-to-page]="fit"
-      (page-rendered)="pageRendered($event)"
+      (page-rendered)="pageRendered()"
     ></pdf-viewer>
 
     <button (click)="scrollToBottom()" type="button" class="scroll-to-bottom">
@@ -21,6 +16,7 @@
 
 <div class="actions">
   <app-button
+    *ngIf="document?.changeButtonVisible"
     color="secondary"
     [disabled]="actionsDisabled"
     (buttonClick)="onChange()"
@@ -28,7 +24,11 @@
     <img src="assets/icons/arrow-left.svg" alt="arrow-left" />
     <span>Izmenite</span>
   </app-button>
-  <app-button [disabled]="actionsDisabled" (buttonClick)="onAccept()">
+  <app-button
+    *ngIf="document?.acceptButtonVisible"
+    [disabled]="actionsDisabled"
+    (buttonClick)="onAccept()"
+  >
     <span>Prihvatite</span>
     <img src="assets/icons/arrow-right.svg" alt="arrow-right" />
   </app-button>

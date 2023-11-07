@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { IntesaDocument, ProcessSteps } from '@models/document.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DocumentType } from '@models/document.model';
 import { FutureStep } from '@models/steps.model';
-import { hasReviews, hasSigns } from '@shared/utils/document.utils';
-import { DocumentsService } from 'src/app/services/documents.service';
-import { StepService } from 'src/app/services/step.service';
+import {
+  REVIEW_FUTURE_STEPS,
+  SIGNING_FUTURE_STEP,
+} from 'src/app/mocks/document.mock';
 
 @Component({
   selector: 'app-initial-step',
@@ -11,42 +12,17 @@ import { StepService } from 'src/app/services/step.service';
   styleUrls: ['./initial-step.component.scss'],
 })
 export class InitialStepComponent implements OnInit {
-  hasReviewDocuments = false;
-  hasSignDocuments = false;
-  documents: IntesaDocument[];
-  constructor(
-    private _stepService: StepService,
-    private _documentsService: DocumentsService
-  ) {}
+  @Input() type: DocumentType;
 
-  futureSteps: FutureStep[] = [
-    {
-      title: 'Pregled dokumenta',
-      // imageUrl: 'assets/icons/pregled-dokumenta-icon.svg',
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Prihvatanje dokumenta',
-      // imageUrl: 'assets/icons/prihvatanje-dokumenta-icon.svg',
-      description: '',
-    },
-  ];
+  @Output() startProcess = new EventEmitter();
+
+  futureSteps: FutureStep[] = REVIEW_FUTURE_STEPS;
   title = 'Potrebno je da pregledate i prihvatite dokument u nastavku';
   text = 'Potrebno je da pregledaš i prihvatiš dokumenta u nastavku.';
 
   ngOnInit(): void {
-    this.documents = this._documentsService.getDocumentsValue();
-    this.hasReviewDocuments = hasReviews(this.documents);
-    this.hasSignDocuments = hasSigns(this.documents);
-
-    if (this.hasSignDocuments) {
-      this.futureSteps.push({
-        title: 'Potpisivanje dokumenta',
-        // imageUrl: 'assets/icons/potpisivanje-dokumenta-icon.svg',
-        description:
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      });
+    if (this.type === DocumentType.FOR_SIGNING) {
+      this.futureSteps.push(SIGNING_FUTURE_STEP);
       this.title =
         'Potrebno je da pregledate, prihvatite i potpišete dokument/a u nastavku';
       this.text =
@@ -55,9 +31,6 @@ export class InitialStepComponent implements OnInit {
   }
 
   getStarted() {
-    if (this.documents.length) {
-      this._documentsService.goToNextDocument();
-      this._stepService.goToNextProcessStep(ProcessSteps.REVIEWSTEP);
-    }
+    this.startProcess.emit();
   }
 }

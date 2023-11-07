@@ -9,10 +9,6 @@ import { IntesaDocument } from '@models/document.model';
 export class DocumentMenuItemComponent {
   @Input() document: IntesaDocument;
 
-  @HostBinding('class.active')
-  @Input()
-  active = false;
-
   @HostBinding('class.initial')
   @Input()
   disabled = false;

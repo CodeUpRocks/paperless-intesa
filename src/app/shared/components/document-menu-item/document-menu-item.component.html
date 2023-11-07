@@ -1,6 +1,5 @@
 <app-document-state-icon
-  [type]="document.type"
-  [state]="document.state"
-  [active]="active"
+  [type]="document.clientQESRequired"
+  [state]="document.documentStatus"
 />
-<span class="name">{{ document.name }}</span>
+<span class="name">{{ document.documentName }}</span>

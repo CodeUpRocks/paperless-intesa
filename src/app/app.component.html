@@ -1,28 +1,7 @@
-<app-side-nav-toolbar
-  *ngIf="currentStep !== steps.WAITING"
+<app-wizard
+  *ngIf="documents$ | async as documents"
+  [documents]="documents"
   [user]="user"
-></app-side-nav-toolbar>
+></app-wizard>
 
-<app-advertisements-step
-  *ngIf="currentStep === steps.WAITING"
-></app-advertisements-step>
-
-<main class="content">
-  <app-progress-bar
-    *ngIf="currentStep !== steps.INITIALSTEP && currentStep !== steps.WAITING"
-  ></app-progress-bar>
-
-  <section class="steps">
-    <app-initial-step
-      *ngIf="currentStep === steps.INITIALSTEP"
-    ></app-initial-step>
-
-    <app-review-step *ngIf="currentStep === steps.REVIEWSTEP"></app-review-step>
-
-    <app-preview-sign-step
-      *ngIf="currentStep === steps.PREVIEWSTEP"
-    ></app-preview-sign-step>
-
-    <app-final-step *ngIf="currentStep === steps.FINALSTEP"></app-final-step>
-  </section>
-</main>
+<!-- TODO ADD SPINNER -->
