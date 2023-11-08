@@ -26,7 +26,14 @@
   }
 
   div.document-wrapper {
-    flex: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: start;
+    gap: 30px;
+    grid-auto-rows: min-content;
+  }
+  div.one-column-wrapper {
+    grid-template-columns: 2fr;
   }
 
   div.content {
@@ -36,19 +43,6 @@
 
   .document {
     justify-content: start;
-  }
-
-  ul {
-    column-count: 2;
-    column-gap: 30px;
-    -webkit-columns: 2;
-    -moz-columns: 2;
-  }
-
-  li {
-    list-style: none;
-    margin-bottom: 30px;
-    width: 100%;
   }
 
   .background-image-wrapper {

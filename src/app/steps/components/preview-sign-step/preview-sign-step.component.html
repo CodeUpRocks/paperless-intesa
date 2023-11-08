@@ -6,15 +6,13 @@
     <div
       class="document-wrapper"
       *ngIf="documentsForSigning$ | async as documentsForSigning"
+      [ngClass]="{ 'one-column-wrapper': documentsForSigning.length === 1 }"
     >
-      <ul>
-        <li *ngFor="let item of documentsForSigning">
-          <app-document-view-item
-            [name]="item.documentName"
-            (openDocument)="openDocumentModal(item)"
-          ></app-document-view-item>
-        </li>
-      </ul>
+      <app-document-view-item
+        *ngFor="let item of documentsForSigning"
+        [name]="item.documentName"
+        (openDocument)="openDocumentModal(item)"
+      ></app-document-view-item>
     </div>
   </div>
 
