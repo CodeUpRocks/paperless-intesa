@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DocumentStatus } from '@models/document.model';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { IntesaDocument } from '@models/document.model';
+import { Observable } from 'rxjs';
 import { DocumentsService } from 'src/app/services/documents.service';
-import { StepService } from 'src/app/services/step.service';
 
 @Component({
   selector: 'app-preview-sign-step',
@@ -9,35 +9,32 @@ import { StepService } from 'src/app/services/step.service';
   styleUrls: ['./preview-sign-step.component.scss'],
 })
 export class PreviewSignStepComponent implements OnInit {
-  documentsForSigning: any;
+  documentsForSigning$: Observable<IntesaDocument[]>;
   isModalOpen = false;
-  document: any;
+  document: IntesaDocument | null = null;
   title = 'Potpiši dokument uz pomoć Consent ID aplikacije.';
   text =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
-  constructor(
-    private _documentsService: DocumentsService,
-    private _stepService: StepService
-  ) {}
+  @Output() signatureRequested = new EventEmitter<void>();
+
+  constructor(private _documentsService: DocumentsService) {}
 
   ngOnInit(): void {
-    this._documentsService.getDocumentsForSign$().subscribe(data => {
-      this.documentsForSigning = [...data];
-    });
+    this.documentsForSigning$ = this._documentsService.getDocumentsForSign$();
   }
 
-  onAccept() {
-    this._documentsService.acceptSignDocument(DocumentStatus.QESInitiated);
+  onSignDocuments() {
+    this.signatureRequested.emit();
   }
 
-  onClick(event: any) {
-    this.document = event;
+  openDocumentModal(document: IntesaDocument) {
+    this.document = document;
     this.isModalOpen = true;
   }
 
-  onCloseModal() {
+  closeDocumentModal() {
     this.isModalOpen = false;
-    this.document = {};
+    this.document = null;
   }
 }

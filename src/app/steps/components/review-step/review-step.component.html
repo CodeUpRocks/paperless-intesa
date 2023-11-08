@@ -16,7 +16,7 @@
 
 <div class="actions">
   <app-button
-    *ngIf="document?.changeButtonVisible"
+    *ngIf="changeButtonVisible"
     color="secondary"
     [disabled]="actionsDisabled"
     (buttonClick)="onChange()"
@@ -25,7 +25,7 @@
     <span>Izmenite</span>
   </app-button>
   <app-button
-    *ngIf="document?.acceptButtonVisible"
+    *ngIf="acceptButtonVisible"
     [disabled]="actionsDisabled"
     (buttonClick)="onAccept()"
   >

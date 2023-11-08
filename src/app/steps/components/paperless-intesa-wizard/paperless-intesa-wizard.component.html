@@ -1,37 +1,44 @@
 <app-side-nav-toolbar
-  *ngIf="currentStep !== steps.WAITING"
+  *ngIf="currentStep !== wizardStep.WAITING"
   [user]="user"
 ></app-side-nav-toolbar>
 
 <app-advertisements-step
-  *ngIf="currentStep === steps.WAITING"
+  *ngIf="currentStep === wizardStep.WAITING"
   [title]="waitingStepTitle"
 ></app-advertisements-step>
 
 <main class="content">
   <app-progress-bar
-    *ngIf="currentStep !== steps.INITIALSTEP && currentStep !== steps.WAITING"
+    *ngIf="
+      currentStep !== wizardStep.INITIAL && currentStep !== wizardStep.WAITING
+    "
   ></app-progress-bar>
 
   <section class="steps">
     <app-initial-step
       [type]="iniitalStepType"
       (startProcess)="handleStartProcess()"
-      *ngIf="currentStep === steps.INITIALSTEP"
+      *ngIf="currentStep === wizardStep.INITIAL"
     ></app-initial-step>
 
     <app-review-step
+      *ngIf="currentStep === wizardStep.REVIEW && currentDocument"
+      [id]="currentDocument.changesetID"
+      [pdfSrc]="currentDocument.documentUrl"
+      [acceptButtonVisible]="currentDocument.acceptButtonVisible"
+      [changeButtonVisible]="currentDocument.changeButtonVisible"
       (accepted)="accepted.emit($event)"
       (changeRequested)="changeRequested.emit($event)"
-      *ngIf="currentStep === steps.REVIEWSTEP"
     ></app-review-step>
 
     <app-preview-sign-step
-      *ngIf="currentStep === steps.PREVIEWSTEP"
+      *ngIf="currentStep === wizardStep.PREVIEW"
+      (signatureRequested)="signatureRequested.emit()"
     ></app-preview-sign-step>
 
     <app-final-step
-      *ngIf="currentStep === steps.FINALSTEP"
+      *ngIf="currentStep === wizardStep.FINAL"
       [state]="finalProcesState"
       [title]="finalProcesTitle"
     ></app-final-step>

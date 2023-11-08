@@ -19,36 +19,34 @@
   </div>
 
   <div class="documents-list">
-    <ng-container *ngIf="documentsForReview$ | async as forReview">
+    <ng-container *ngIf="documentsForReviewVM$ | async as forReviewVM">
       <app-document-menu-list
-        *ngIf="!!forReview.length"
+        *ngIf="!!forReviewVM.documents.length"
         title="Dokumenti za pregled"
-        [documents]="forReview"
+        [documents]="forReviewVM.documents"
+        [documentsLeft]="forReviewVM.documentsLeft"
       ></app-document-menu-list>
     </ng-container>
 
-    <ng-container *ngIf="documentsForSigning$ | async as forSigning">
+    <ng-container *ngIf="documentsForSigningVM$ | async as forSigningVM">
       <app-document-menu-list
-        *ngIf="forSigning.length"
+        *ngIf="forSigningVM.documents.length"
         title="Dokumenti za potpisivanje"
-        [documents]="forSigning"
+        [documents]="forSigningVM.documents"
+        [documentsLeft]="forSigningVM.documentsLeft"
       ></app-document-menu-list>
     </ng-container>
   </div>
 
   <div class="logo-container">
-    <!-- TODO: Manage logo better -->
     <img
-      *ngIf="!collapsed"
+      *ngIf="!collapsed; else logoShort"
       class="logo"
       width="180px"
       src="assets/images/logo.png"
     />
-    <img
-      *ngIf="collapsed"
-      class="logo-short"
-      width="24px"
-      src="assets/images/logo-short.png"
-    />
+    <ng-template #logoShort>
+      <img class="logo-short" width="24px" src="assets/images/logo-short.png" />
+    </ng-template>
   </div>
 </nav>

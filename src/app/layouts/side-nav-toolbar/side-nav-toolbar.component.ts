@@ -1,8 +1,13 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { IntesaDocument } from '@models/document.model';
+import { DocumentStatus, IntesaDocument } from '@models/document.model';
 import { User } from '@models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DocumentsService } from 'src/app/services/documents.service';
+
+type DocumentsListViewModel = {
+  documents: IntesaDocument[];
+  documentsLeft: number;
+};
 
 @Component({
   selector: 'app-side-nav-toolbar',
@@ -15,18 +20,58 @@ export class SideNavToolbarComponent implements OnInit {
   @HostBinding('class.collapsed')
   collapsed = false;
 
-  documentsForReview$: Observable<IntesaDocument[]>;
-  documentsForSigning$: Observable<IntesaDocument[]>;
+  documentsForReviewVM$: Observable<DocumentsListViewModel>;
+  documentsForSigningVM$: Observable<DocumentsListViewModel>;
 
   constructor(private _documentService: DocumentsService) {}
 
   ngOnInit(): void {
-    this.documentsForReview$ = this._documentService.getDocumentsForReview$();
-
-    this.documentsForSigning$ = this._documentService.getDocumentsForSign$();
+    this.initForReviewVM();
+    this.initForSigningVM();
   }
 
   toggleSidebar() {
     this.collapsed = !this.collapsed;
+  }
+
+  private initForReviewVM() {
+    this.documentsForReviewVM$ = this._documentService
+      .getDocumentsForReview$()
+      .pipe(
+        map(forReview => ({
+          documents: forReview,
+          documentsLeft: this.calculateDocumentsLeft(
+            forReview,
+            DocumentStatus.ACCEPTED
+          ),
+        }))
+      );
+  }
+
+  private initForSigningVM() {
+    this.documentsForSigningVM$ = this._documentService
+      .getDocumentsForSign$()
+      .pipe(
+        map(forSigning => ({
+          documents: forSigning,
+          documentsLeft: this.calculateDocumentsLeft(
+            forSigning,
+            DocumentStatus.QESSigned
+          ),
+        }))
+      );
+  }
+
+  private calculateDocumentsLeft(
+    documents: IntesaDocument[],
+    status: DocumentStatus
+  ) {
+    return documents.reduce((total, current) => {
+      if (current.documentStatus !== status) {
+        total++;
+      }
+
+      return total;
+    }, 0);
   }
 }

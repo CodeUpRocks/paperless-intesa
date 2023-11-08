@@ -13,9 +13,10 @@ export enum DocumentStep {
   REVIEW = 1,
   ACCEPTANCE = 2,
   SIGNING = 3,
+  FINAL = 4,
 }
 
-export enum DocumentType {
+export enum IntesaDocumentType {
   FOR_REVIEW = 'FOR_REVIEW',
   FOR_SIGNING = 'FOR_SIGNING',
 }
@@ -25,12 +26,12 @@ export enum ProcessState {
   SUCCESS = 'SUCCESS',
 }
 
-export enum ProcessSteps {
-  INITIALSTEP = 'INITIAL',
-  PREVIEWSTEP = 'PREVIEW',
+export enum IntesaWizardStep {
+  INITIAL = 'INITIAL',
+  PREVIEW = 'PREVIEW',
   WAITING = 'WAITING',
-  REVIEWSTEP = 'REVIEW',
-  FINALSTEP = 'FINAL',
+  REVIEW = 'REVIEW',
+  FINAL = 'FINAL',
 }
 
 export interface IntesaDocument {

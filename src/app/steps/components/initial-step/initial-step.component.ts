@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DocumentType } from '@models/document.model';
+import { IntesaDocumentType } from '@models/document.model';
 import { FutureStep } from '@models/steps.model';
 import {
   REVIEW_FUTURE_STEPS,
@@ -12,16 +12,16 @@ import {
   styleUrls: ['./initial-step.component.scss'],
 })
 export class InitialStepComponent implements OnInit {
-  @Input() type: DocumentType;
+  @Input() type: IntesaDocumentType;
 
   @Output() startProcess = new EventEmitter();
 
-  futureSteps: FutureStep[] = REVIEW_FUTURE_STEPS;
+  futureSteps: FutureStep[] = [...REVIEW_FUTURE_STEPS];
   title = 'Potrebno je da pregledate i prihvatite dokument u nastavku';
   text = 'Potrebno je da pregledaš i prihvatiš dokumenta u nastavku.';
 
   ngOnInit(): void {
-    if (this.type === DocumentType.FOR_SIGNING) {
+    if (this.type === IntesaDocumentType.FOR_SIGNING) {
       this.futureSteps.push(SIGNING_FUTURE_STEP);
       this.title =
         'Potrebno je da pregledate, prihvatite i potpišete dokument/a u nastavku';

@@ -1,6 +1,6 @@
 import {
   DocumentStatus,
-  DocumentType,
+  IntesaDocumentType,
   IntesaDocument,
 } from '@models/document.model';
 
@@ -21,4 +21,10 @@ export const hasChangings = (documents: IntesaDocument[]) => {
     (document: IntesaDocument) =>
       document.documentStatus === DocumentStatus.CHANGE_REQUESTED
   );
+};
+
+export const toDocumentType = (clientQESRequired: boolean) => {
+  return clientQESRequired
+    ? IntesaDocumentType.FOR_SIGNING
+    : IntesaDocumentType.FOR_REVIEW;
 };

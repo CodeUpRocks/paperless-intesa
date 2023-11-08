@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import {
   DocumentStatus,
-  DocumentType,
+  IntesaDocumentType,
   IntesaDocument,
   ProcessState,
-  ProcessSteps,
+  IntesaWizardStep,
 } from '@models/document.model';
 import { User } from '@models/user.model';
 import { DocumentsService } from 'src/app/services/documents.service';
@@ -31,14 +31,9 @@ export class IntesaWizardComponent implements OnChanges {
   @Output() accepted = new EventEmitter<number | string>();
 
   /**
-   * Emits event to start review process
+   * Emits event to start review or signing process
    */
-  @Output() startReview = new EventEmitter<void>();
-
-  /**
-   * Emits an event to start signing process
-   */
-  @Output() startSigning = new EventEmitter<void>();
+  @Output() startProcess = new EventEmitter<void>();
 
   /**
    * Emits ID of a document for which change is requested
@@ -50,55 +45,57 @@ export class IntesaWizardComponent implements OnChanges {
    */
   @Output() signatureRequested = new EventEmitter<void>();
 
-  currentStep: ProcessSteps;
-  steps = ProcessSteps;
+  currentStep: IntesaWizardStep;
+  wizardStep = IntesaWizardStep;
   finalProcesState: ProcessState;
   finalProcesTitle: string;
   waitingStepTitle: string;
-  iniitalStepType: DocumentType = DocumentType.FOR_REVIEW;
+  iniitalStepType: IntesaDocumentType = IntesaDocumentType.FOR_REVIEW;
+  currentDocument: IntesaDocument | undefined = undefined;
 
   constructor(private _documentsService: DocumentsService) {}
 
   private isDocumentsChanged = (changes: SimpleChanges): boolean =>
     changes['documents']?.previousValue !== changes['documents']?.currentValue;
 
-  handleStartProcess() {
-    this._documentsService.goToNextDocument();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (this.isDocumentsChanged(changes)) {
-      this.handleDocumentList([...this.documents]);
+      this._documentsService.setDocuments(this.documents);
+      this.currentDocument = this._documentsService.currentDocument;
+      this.handleWizardSteps();
     }
   }
 
-  private handleDocumentList(documents: IntesaDocument[]) {
+  handleStartProcess() {
+    this.startProcess.emit();
+  }
+
+  getDocumentsForSigning() {
+    return this.documents.filter(document => document.clientQESRequired);
+  }
+
+  getDocumentsForReview() {
+    return this.documents.filter(document => !document.clientQESRequired);
+  }
+
+  private handleWizardSteps() {
     // NO DOCUMENTS SHOW MAYBE SOME MESSAGE TO A USER
-    if (!documents.length) {
+    if (!this.documents.length) {
       return;
     }
 
     // CHECK IF ANY DOCUMENT IS CURRENTLY BEING VIEWED
     if (
-      documents.some(
+      this.documents.some(
         document => document.documentStatus == DocumentStatus.VIEWING
       )
     ) {
-      this.currentStep = ProcessSteps.REVIEWSTEP;
-      const currentDocIndex = documents.findIndex(
-        document => document.documentStatus == DocumentStatus.VIEWING
-      );
-      this._documentsService.setCurrentIndex(currentDocIndex);
+      this.currentStep = IntesaWizardStep.REVIEW;
       return;
     }
 
-    const documentsForSigning = documents.filter(
-      document => document.clientQESRequired
-    );
-
-    const documentsForReview = documents.filter(
-      document => !document.clientQESRequired
-    );
+    const documentsForSigning = this.getDocumentsForSigning();
+    const documentsForReview = this.getDocumentsForReview();
 
     if (
       !!documentsForReview.length &&
@@ -106,8 +103,8 @@ export class IntesaWizardComponent implements OnChanges {
         document => document.documentStatus == DocumentStatus.INITIAL
       )
     ) {
-      this.currentStep = ProcessSteps.INITIALSTEP;
-      this.iniitalStepType = DocumentType.FOR_REVIEW;
+      this.currentStep = IntesaWizardStep.INITIAL;
+      this.iniitalStepType = IntesaDocumentType.FOR_REVIEW;
       return;
     }
 
@@ -121,8 +118,8 @@ export class IntesaWizardComponent implements OnChanges {
           document => document.documentStatus == DocumentStatus.INITIAL
         ))
     ) {
-      this.currentStep = ProcessSteps.INITIALSTEP;
-      this.iniitalStepType = DocumentType.FOR_SIGNING;
+      this.currentStep = IntesaWizardStep.INITIAL;
+      this.iniitalStepType = IntesaDocumentType.FOR_SIGNING;
       return;
     }
 
@@ -134,7 +131,7 @@ export class IntesaWizardComponent implements OnChanges {
       ) {
         this.finalProcesState = ProcessState.SUCCESS;
         this.finalProcesTitle = 'Pregled dokumenata uspešno završen!';
-        this.currentStep = ProcessSteps.FINALSTEP;
+        this.currentStep = IntesaWizardStep.FINAL;
       }
     } else {
       if (
@@ -142,7 +139,7 @@ export class IntesaWizardComponent implements OnChanges {
           document => document.documentStatus === DocumentStatus.QESRequested
         )
       )
-        this.currentStep = ProcessSteps.PREVIEWSTEP;
+        this.currentStep = IntesaWizardStep.PREVIEW;
     }
 
     if (documentsForSigning.length > 0) {
@@ -154,7 +151,7 @@ export class IntesaWizardComponent implements OnChanges {
         this.waitingStepTitle =
           'Molimo sačekajte potvrdu uspešnog potpisivanja';
 
-        this.currentStep = ProcessSteps.WAITING;
+        this.currentStep = IntesaWizardStep.WAITING;
       }
 
       if (
@@ -163,7 +160,7 @@ export class IntesaWizardComponent implements OnChanges {
         )
       ) {
         this.waitingStepTitle = 'Molimo sačekajte izmenu';
-        this.currentStep = ProcessSteps.WAITING;
+        this.currentStep = IntesaWizardStep.WAITING;
       }
       if (
         documentsForSigning.some(
@@ -173,7 +170,7 @@ export class IntesaWizardComponent implements OnChanges {
         this.finalProcesTitle = 'DOŠLO JE DO GREŠKE PRILIKOM POTPISIVANJA!';
 
         this.finalProcesState = ProcessState.ERROR;
-        this.currentStep = ProcessSteps.FINALSTEP;
+        this.currentStep = IntesaWizardStep.FINAL;
       }
 
       if (
@@ -183,7 +180,7 @@ export class IntesaWizardComponent implements OnChanges {
       ) {
         this.finalProcesTitle = 'Potpisivanje uspešno završeno!';
         this.finalProcesState = ProcessState.SUCCESS;
-        this.currentStep = ProcessSteps.FINALSTEP;
+        this.currentStep = IntesaWizardStep.FINAL;
       }
     }
   }

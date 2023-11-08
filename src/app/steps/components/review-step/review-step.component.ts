@@ -2,12 +2,13 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnInit,
+  Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { DocumentStatus, DocumentStep } from '@models/document.model';
-import { DocumentsService } from 'src/app/services/documents.service';
+import { DocumentStep } from '@models/document.model';
 import { StepService } from 'src/app/services/step.service';
 
 @Component({
@@ -15,9 +16,12 @@ import { StepService } from 'src/app/services/step.service';
   templateUrl: './review-step.component.html',
   styleUrls: ['./review-step.component.scss'],
 })
-export class ReviewStepComponent implements OnInit {
-  document: any;
-  pdfSrc = '';
+export class ReviewStepComponent implements OnChanges {
+  @Input() id: number | string;
+  @Input() pdfSrc: string;
+  @Input() changeButtonVisible: boolean;
+  @Input() acceptButtonVisible: boolean;
+
   fit = false;
   actionsDisabled = true;
 
@@ -26,19 +30,12 @@ export class ReviewStepComponent implements OnInit {
 
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
-  constructor(
-    private _stepService: StepService,
-    private _documentsService: DocumentsService
-  ) {}
+  constructor(private _stepService: StepService) {}
 
-  ngOnInit(): void {
-    this._documentsService.getDocuments$().subscribe(data => {
-      this.document = data.find(
-        document => document.documentStatus === DocumentStatus.VIEWING
-      );
-      this.pdfSrc = this.document?.documentUrl;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id']?.previousValue !== changes['id']?.currentValue) {
       this.pdfViewer?.nativeElement?.scrollTo(0, 0);
-    });
+    }
   }
 
   pageRendered() {
@@ -58,26 +55,12 @@ export class ReviewStepComponent implements OnInit {
   }
 
   onAccept() {
-    this.accepted.emit(this.document.changesetID);
-
-    this._stepService.currentDocumentStep.next(DocumentStep.REVIEW);
-
-    // This will be moved to app component
-    this._documentsService.updateDocumentStatus(
-      !this.document?.clientQESRequired
-        ? DocumentStatus.ACCEPTED
-        : DocumentStatus.QESRequested
-    );
-
+    this.accepted.emit(this.id);
     this.actionsDisabled = true;
+    this._stepService.currentDocumentStep.next(DocumentStep.REVIEW);
   }
 
   onChange() {
-    this.changeRequested.emit(this.document.changesetID);
-
-    // This will be moved to app component
-    this._documentsService.updateDocumentStatus(
-      DocumentStatus.CHANGE_REQUESTED
-    );
+    this.changeRequested.emit(this.id);
   }
 }

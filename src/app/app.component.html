@@ -2,6 +2,10 @@
   *ngIf="documents$ | async as documents"
   [documents]="documents"
   [user]="user"
+  (startProcess)="handleStartProcess()"
+  (accepted)="handleAccepted($event)"
+  (changeRequested)="handleChangeRequested($event)"
+  (signatureRequested)="handleSignatureRequest()"
 ></app-wizard>
 
 <!-- TODO ADD SPINNER -->

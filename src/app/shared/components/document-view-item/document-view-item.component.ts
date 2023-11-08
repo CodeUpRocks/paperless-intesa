@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./document-view-item.component.scss'],
 })
 export class DocumentViewItemComponent {
-  @Input() documentTitle = '';
+  @Input() name = '';
 
   @Output() openDocument = new EventEmitter<void>();
 }

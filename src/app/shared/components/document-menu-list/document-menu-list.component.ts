@@ -1,63 +1,26 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DocumentStatus, IntesaDocument } from '@models/document.model';
-import { Subject, map, takeUntil } from 'rxjs';
-import { DocumentsService } from 'src/app/services/documents.service';
+import { toDocumentType } from '@shared/utils/document.utils';
 
 @Component({
   selector: 'app-document-menu-list',
   templateUrl: './document-menu-list.component.html',
   styleUrls: ['./document-menu-list.component.scss'],
 })
-export class DocumentMenuListComponent implements OnInit, OnDestroy {
+export class DocumentMenuListComponent {
   @Input() title: string;
   @Input() documents: IntesaDocument[];
-  documentsLeft: number;
-  unSubscribe$: Subject<any> = new Subject<any>();
+  @Input() documentsLeft = 0;
 
-  constructor(private _documentsService: DocumentsService) {}
-
-  ngOnInit(): void {
-    this._documentsService
-      .getDocuments$()
-      .pipe(
-        takeUntil(this.unSubscribe$),
-        map(data => {
-          const reducedDocuments = this.documents.reduce(
-            (acc: IntesaDocument[], currenDoc: IntesaDocument) => {
-              const doc = data.find(
-                document => document.changesetID === currenDoc.changesetID
-              );
-              if (
-                !doc?.clientQESRequired &&
-                doc?.documentStatus === DocumentStatus.ACCEPTED
-              ) {
-                acc.push(doc);
-              }
-
-              if (
-                doc?.clientQESRequired &&
-                doc?.documentStatus === DocumentStatus.QESSigned
-              ) {
-                acc.push(doc);
-              }
-
-              return [...acc];
-            },
-            []
-          );
-
-          return reducedDocuments.length;
-        })
-      )
-      .subscribe(data => (this.documentsLeft = this.documents.length - data));
+  parseDocumentType(clientQESRequired: boolean) {
+    return toDocumentType(clientQESRequired);
   }
 
-  trackByFn(index: number, document: IntesaDocument) {
+  isDisabled(status: DocumentStatus) {
+    return status === DocumentStatus.INITIAL;
+  }
+
+  trackByFn(_: number, document: IntesaDocument) {
     return document.changesetID;
-  }
-
-  ngOnDestroy(): void {
-    this.unSubscribe$.next(true);
-    this.unSubscribe$.unsubscribe();
   }
 }

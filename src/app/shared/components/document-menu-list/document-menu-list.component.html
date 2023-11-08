@@ -2,11 +2,15 @@
   <p class="title">{{ title }}</p>
   <div class="counter">{{ documentsLeft }}</div>
 </div>
+
 <div class="divider"></div>
+
 <div class="list-container">
   <app-document-menu-item
     *ngFor="let item of documents; trackBy: trackByFn"
-    [document]="item"
-    [disabled]="item.documentStatus === 1"
+    [status]="item.documentStatus"
+    [name]="item.documentName"
+    [type]="parseDocumentType(item.clientQESRequired)"
+    [disabled]="isDisabled(item.documentStatus)"
   />
 </div>
