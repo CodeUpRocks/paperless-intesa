@@ -3,8 +3,34 @@
 <div class="steps">
   <app-accordion
     *ngFor="let step of steps; let i = index"
-    [stepTitle]="step.title"
-    [stepDescription]="step.description"
-    [stepNumber]="i + 1"
-  ></app-accordion>
+    [title]="step.title"
+    [orderNumber]="i + 1"
+    [expanded]="i === activeAccordion"
+    (toggle)="setActiveAccordion($event, i)"
+  >
+    <div [ngSwitch]="i + 1" class="icon">
+      <ng-container *ngSwitchCase="documentSteps.REVIEW">
+        <img
+          class="document-icon-review"
+          src="assets/icons/pregled-dokumenta-icon.svg"
+          alt="edit-icon"
+        />
+      </ng-container>
+      <ng-container *ngSwitchCase="documentSteps.ACCEPTANCE">
+        <img
+          class="document-icon-accept"
+          src="assets/icons/prihvatanje-dokumenta-icon.svg"
+          alt="edit-icon"
+        />
+      </ng-container>
+      <ng-container *ngSwitchCase="documentSteps.SIGNING">
+        <img
+          class="document-icon-sign"
+          src="assets/icons/potpisivanje-dokumenta-icon.svg"
+          alt="edit-icon"
+        />
+      </ng-container>
+    </div>
+    <p>{{ step.description }}</p>
+  </app-accordion>
 </div>

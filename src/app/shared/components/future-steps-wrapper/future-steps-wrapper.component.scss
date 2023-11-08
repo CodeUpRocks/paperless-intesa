@@ -28,6 +28,48 @@
     overflow-y: scroll;
     padding-bottom: 10px;
 
+    &::ng-deep {
+      p {
+        text-align: start;
+        font-size: 14px;
+      }
+    }
+
+    .icon {
+      height: 53px;
+      width: 53px;
+      border-radius: 50px;
+      background-color: #f6c1a2;
+      filter: drop-shadow(4px 4px 11px rgba(77, 77, 77, 0.11));
+      display: flex;
+
+      &::ng-deep {
+        .document-icon-review {
+          position: relative;
+          bottom: -4px;
+          left: -9px;
+          height: 61px;
+          width: 66px;
+        }
+
+        .document-icon-accept {
+          position: relative;
+          bottom: -1px;
+          left: 0px;
+          height: 66px;
+          width: 82px;
+        }
+
+        .document-icon-sign {
+          position: relative;
+          bottom: 3px;
+          left: -7px;
+          width: 82px;
+          height: 73px;
+        }
+      }
+    }
+
     .step-connection-line {
       height: 8px;
       position: absolute;

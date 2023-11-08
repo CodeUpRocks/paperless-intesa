@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DocumentStep } from '@models/document.model';
 import { FutureStep } from '@models/steps.model';
 
 @Component({
@@ -8,4 +9,11 @@ import { FutureStep } from '@models/steps.model';
 })
 export class FutureStepsWrapperComponent {
   @Input() steps: FutureStep[] = [];
+
+  activeAccordion = -1;
+  documentSteps = DocumentStep;
+
+  setActiveAccordion(expanded: boolean, index: number) {
+    this.activeAccordion = expanded ? index : -1;
+  }
 }

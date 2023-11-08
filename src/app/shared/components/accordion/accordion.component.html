@@ -1,46 +1,19 @@
-<div class="accordion">
-  <div class="panel">
-    <div class="content-wrapper">
-      <div class="counter">{{ stepNumber }}</div>
-
-      <div [ngSwitch]="stepNumber" class="image-div">
-        <ng-container *ngSwitchCase="documentSteps.REVIEW">
-          <img
-            class="document-icon-review"
-            src="assets/icons/pregled-dokumenta-icon.svg"
-            alt="edit-icon"
-          />
-        </ng-container>
-        <ng-container *ngSwitchCase="documentSteps.ACCEPTANCE">
-          <img
-            class="document-icon-accept"
-            src="assets/icons/prihvatanje-dokumenta-icon.svg"
-            alt="edit-icon"
-          />
-        </ng-container>
-        <ng-container *ngSwitchCase="documentSteps.SIGNING">
-          <img
-            class="document-icon-sign"
-            src="assets/icons/potpisivanje-dokumenta-icon.svg"
-            alt="edit-icon"
-          />
-        </ng-container>
-      </div>
-
-      <div>{{ stepTitle }}</div>
+<div
+  class="accordion"
+  [ngClass]="{ expanded: expanded }"
+  [@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
+>
+  <div class="accordion-header" (click)="toggleAccordion()">
+    <div class="header-content">
+      <span *ngIf="orderNumber" class="order-number">{{ orderNumber }}</span>
+      <!-- Content projection for the icon -->
+      <ng-content select=".icon"></ng-content>
+      <span class="title">{{ title }}</span>
     </div>
-    <button class="arrow-button" (click)="accordionAction()">
-      <img
-        id="arrow"
-        [ngClass]="showAccordionBody ? 'rotated-image' : 'image'"
-        src="assets/icons/arrow-left.svg"
-        alt="edit-icon"
-      />
-    </button>
+    <img class="arrow" src="assets/icons/arrow-left.svg" alt="edit-icon" />
   </div>
-  <div *ngIf="showAccordionBody && !!stepDescription" class="panel-detail">
-    <p>
-      {{ stepDescription }}
-    </p>
+  <div class="accordion-content">
+    <ng-content></ng-content>
+    <!-- Content projection for the content -->
   </div>
 </div>

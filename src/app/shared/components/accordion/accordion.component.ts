@@ -1,25 +1,33 @@
-import { Component, Input } from '@angular/core';
-import { DocumentStep } from '@models/document.model';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-accordion',
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
+  animations: [
+    trigger('expandCollapse', [
+      state('expanded', style({ height: '*' })),
+      state('collapsed', style({ height: '83px' })),
+      transition('expanded <=> collapsed', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class AccordionComponent {
-  @Input() stepTitle = '';
-  @Input() stepNumber = 1;
-  @Input() stepDescription = '';
-  documentSteps = DocumentStep;
-  showAccordionBody = false;
-  image: any;
+  @Input() title = '';
+  @Input() orderNumber: number;
+  @Input() expanded = false;
 
-  accordionAction() {
-    // this.image = document.getElementById('arrow');
-    // this.showAccordionBody
-    //   ? this.image.setAttribute('class', 'image')
-    //   : this.image.setAttribute('class', 'rotated-image');
+  @Output() toggle = new EventEmitter<boolean>();
 
-    this.showAccordionBody = !this.showAccordionBody;
+  toggleAccordion() {
+    this.expanded = !this.expanded;
+    this.toggle.emit(this.expanded);
   }
 }
