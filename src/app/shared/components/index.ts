@@ -10,6 +10,7 @@ import { TextCardComponent } from './text-card/text-card.component';
 import { ModalComponent } from './modal/modal.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { CarouselComponent } from './carousle/carousel.component';
 
 export const components = [
   DocumentStatusIconComponent,
@@ -24,6 +25,7 @@ export const components = [
   ModalComponent,
   AccordionComponent,
   AvatarComponent,
+  CarouselComponent,
 ];
 
 export { ButtonComponent } from './button/button.component';
@@ -38,3 +40,4 @@ export { DocumentViewItemComponent } from './document-view-item/document-view-it
 export { ModalComponent } from './modal/modal.component';
 export { AccordionComponent } from './accordion/accordion.component';
 export { AvatarComponent } from './avatar/avatar.component';
+export { CarouselComponent } from './carousle/carousel.component';

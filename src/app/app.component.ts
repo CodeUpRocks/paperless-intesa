@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
 
       // TODO: Handle partally rejected or reject all documents scenarios
       // this.updateSigningDocumentsStatus(DocumentStatus.QESRejected);
-    }, 3000);
+    }, 5000);
   }
 
   handleChangeRequested(documentId: string | number) {
@@ -141,6 +141,6 @@ export class AppComponent implements OnInit {
 
     setTimeout(() => {
       this.updateSigningDocumentsStatus(DocumentStatus.INITIAL);
-    }, 3000);
+    }, 5000);
   }
 }
