@@ -1,4 +1,5 @@
 import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
+import { isInRange } from '@shared/utils/number.utils';
 
 @Directive({
   selector: '[appScrollTracker]',
@@ -9,14 +10,13 @@ export class ScrollTrackerDirective {
   @HostListener('scroll', ['$event'])
   onScroll(event: any) {
     // do tracking
-    // console.log('scrolled', event.target.scrollTop);
     // Listen to click events in the component
     const tracker = event.target;
     let endReached = false;
     const limit = tracker.scrollHeight - tracker.clientHeight;
+    const limitOffset = { min: limit - 2, max: limit + 2 };
 
-    // console.log(event.target.scrollTop, limit);
-    if (event.target.scrollTop === limit) {
+    if (isInRange(event.target.scrollTop, limitOffset)) {
       endReached = true;
 
       this.scrolled.emit(endReached);
