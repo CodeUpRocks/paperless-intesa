@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DocumentStatus, IntesaDocument } from '@models/document.model';
-import { toDocumentType } from '@shared/utils/document.utils';
+import {
+  DocumentStatus,
+  IntesaDocument,
+  IntesaDocumentType,
+} from '@models/document.model';
+import { hasSigns, toDocumentType } from '@shared/utils/document.utils';
 import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +16,9 @@ export class DocumentsService {
   get currentDocumentType() {
     return this.currentDocument
       ? toDocumentType(this.currentDocument.clientQESRequired)
-      : null;
+      : hasSigns(this._documents$.value)
+      ? IntesaDocumentType.FOR_SIGNING
+      : IntesaDocumentType.FOR_REVIEW;
   }
 
   setDocuments(documents: IntesaDocument[]) {

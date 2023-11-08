@@ -12,9 +12,11 @@ import {
   IntesaDocument,
   ProcessState,
   IntesaWizardStep,
+  DocumentStep,
 } from '@models/document.model';
 import { User } from '@models/user.model';
 import { DocumentsService } from 'src/app/services/documents.service';
+import { StepService } from 'src/app/services/step.service';
 
 @Component({
   selector: 'app-wizard',
@@ -53,7 +55,10 @@ export class IntesaWizardComponent implements OnChanges {
   iniitalStepType: IntesaDocumentType = IntesaDocumentType.FOR_REVIEW;
   currentDocument: IntesaDocument | undefined = undefined;
 
-  constructor(private _documentsService: DocumentsService) {}
+  constructor(
+    private _documentsService: DocumentsService,
+    private _stepService: StepService
+  ) {}
 
   private isDocumentsChanged = (changes: SimpleChanges): boolean =>
     changes['documents']?.previousValue !== changes['documents']?.currentValue;
@@ -84,104 +89,87 @@ export class IntesaWizardComponent implements OnChanges {
       return;
     }
 
-    // CHECK IF ANY DOCUMENT IS CURRENTLY BEING VIEWED
-    if (
-      this.documents.some(
-        document => document.documentStatus == DocumentStatus.VIEWING
-      )
-    ) {
-      this.currentStep = IntesaWizardStep.REVIEW;
-      return;
-    }
-
     const documentsForSigning = this.getDocumentsForSigning();
     const documentsForReview = this.getDocumentsForReview();
 
-    if (
-      !!documentsForReview.length &&
-      documentsForReview.every(
-        document => document.documentStatus == DocumentStatus.INITIAL
-      )
-    ) {
-      this.currentStep = IntesaWizardStep.INITIAL;
-      this.iniitalStepType = IntesaDocumentType.FOR_REVIEW;
-      return;
-    }
-
-    if (
-      !documentsForReview.length ||
-      (documentsForReview.every(
-        document => document.documentStatus == DocumentStatus.ACCEPTED
-      ) &&
-        !!documentsForSigning.length &&
-        documentsForSigning.every(
-          document => document.documentStatus == DocumentStatus.INITIAL
-        ))
-    ) {
-      this.currentStep = IntesaWizardStep.INITIAL;
-      this.iniitalStepType = IntesaDocumentType.FOR_SIGNING;
-      return;
-    }
-
-    if (documentsForSigning.length === 0) {
-      if (
-        documentsForReview.every(
-          document => document.documentStatus === DocumentStatus.ACCEPTED
-        )
-      ) {
-        this.finalProcesState = ProcessState.SUCCESS;
-        this.finalProcesTitle = 'Pregled dokumenata uspešno završen!';
-        this.currentStep = IntesaWizardStep.FINAL;
-      }
-    } else {
-      if (
-        documentsForSigning.every(
-          document => document.documentStatus === DocumentStatus.QESRequested
-        )
-      )
-        this.currentStep = IntesaWizardStep.PREVIEW;
-    }
-
-    if (documentsForSigning.length > 0) {
-      if (
-        documentsForSigning.every(
-          document => document.documentStatus == DocumentStatus.QESInitiated
-        )
-      ) {
-        this.waitingStepTitle =
-          'Molimo sačekajte potvrdu uspešnog potpisivanja';
-
-        this.currentStep = IntesaWizardStep.WAITING;
-      }
-
-      if (
+    switch (true) {
+      case !!documentsForSigning.length &&
         documentsForSigning.some(
-          document => document.documentStatus == DocumentStatus.CHANGE_REQUESTED
-        )
-      ) {
-        this.waitingStepTitle = 'Molimo sačekajte izmenu';
-        this.currentStep = IntesaWizardStep.WAITING;
-      }
-      if (
-        documentsForSigning.some(
-          document => document.documentStatus == DocumentStatus.QESRejected
-        )
-      ) {
+          document => document.documentStatus === DocumentStatus.QESRejected
+        ):
         this.finalProcesTitle = 'DOŠLO JE DO GREŠKE PRILIKOM POTPISIVANJA!';
-
         this.finalProcesState = ProcessState.ERROR;
         this.currentStep = IntesaWizardStep.FINAL;
-      }
+        this._stepService.currentDocumentStep.next(DocumentStep.FINAL);
+        break;
 
-      if (
+      case !!documentsForReview.length &&
+        !documentsForSigning.length &&
+        documentsForReview.every(
+          document => document.documentStatus === DocumentStatus.ACCEPTED
+        ):
+        this.finalProcesTitle = 'Pregled dokumenata uspešno završen!';
+        this.finalProcesState = ProcessState.SUCCESS;
+        this.currentStep = IntesaWizardStep.FINAL;
+        this._stepService.currentDocumentStep.next(DocumentStep.FINAL);
+        break;
+
+      case !!documentsForSigning.length &&
         documentsForSigning.every(
-          document => document.documentStatus == DocumentStatus.QESSigned
-        )
-      ) {
+          document => document.documentStatus === DocumentStatus.QESSigned
+        ):
         this.finalProcesTitle = 'Potpisivanje uspešno završeno!';
         this.finalProcesState = ProcessState.SUCCESS;
         this.currentStep = IntesaWizardStep.FINAL;
-      }
+        this._stepService.currentDocumentStep.next(DocumentStep.FINAL);
+        break;
+
+      case this.documents.some(
+        document => document.documentStatus === DocumentStatus.CHANGE_REQUESTED
+      ):
+        this.waitingStepTitle = 'Molimo sačekajte izmenu';
+        this.currentStep = IntesaWizardStep.WAITING;
+        break;
+
+      case !!documentsForSigning.length &&
+        documentsForSigning.every(
+          document => document.documentStatus === DocumentStatus.QESInitiated
+        ):
+        this.waitingStepTitle =
+          'Molimo sačekajte potvrdu uspešnog potpisivanja';
+        this.currentStep = IntesaWizardStep.WAITING;
+        break;
+
+      case (!documentsForReview.length ||
+        (!!documentsForReview.length &&
+          documentsForReview.every(
+            document => document.documentStatus === DocumentStatus.ACCEPTED
+          ))) &&
+        (!documentsForSigning ||
+          (!!documentsForSigning.length &&
+            documentsForSigning.every(
+              document =>
+                document.documentStatus === DocumentStatus.QESRequested
+            ))):
+        this._stepService.currentDocumentStep.next(DocumentStep.SIGNING);
+        this.currentStep = IntesaWizardStep.PREVIEW;
+        break;
+
+      case this.documents.some(
+        document => document.documentStatus === DocumentStatus.VIEWING
+      ):
+        this.currentStep = IntesaWizardStep.REVIEW;
+        break;
+
+      default:
+        !!documentsForReview.length &&
+        documentsForReview.every(
+          document => document.documentStatus == DocumentStatus.INITIAL
+        )
+          ? (this.iniitalStepType = IntesaDocumentType.FOR_REVIEW)
+          : (this.iniitalStepType = IntesaDocumentType.FOR_SIGNING);
+        this.currentStep = IntesaWizardStep.INITIAL;
+        break;
     }
   }
 }

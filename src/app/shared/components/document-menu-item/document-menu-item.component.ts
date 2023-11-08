@@ -20,4 +20,9 @@ export class DocumentMenuItemComponent {
   @HostBinding('class.initial')
   @Input()
   disabled = false;
+
+  @HostBinding('class.active')
+  get active() {
+    return this.status === DocumentStatus.VIEWING;
+  }
 }

@@ -6,4 +6,16 @@
     </div>
   </div>
 </div>
-<img src="assets/icons/waiting-image.svg" />
+<!-- <img *ngIf="images.length" style="height: 100%; width: 100%" [src]="imgSrc" /> -->
+<div class="waiting-wrapper">
+  <div
+    class="ad-background"
+    [ngStyle]="{ backgroundImage: getImage() }"
+    *ngIf="images.length; else placeholder"
+  ></div>
+  <ng-template #placeholder>
+    <div class="background-image-wrapper">
+      <img style="position: relative" src="assets/icons/waiting-image.svg" />
+    </div>
+  </ng-template>
+</div>
