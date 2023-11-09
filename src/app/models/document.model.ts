@@ -45,6 +45,4 @@ export interface IntesaDocument {
   documentStatus: DocumentStatus;
   processId: number;
   processStatusId: number;
-  documentUrl: string;
-  index?: number;
 }

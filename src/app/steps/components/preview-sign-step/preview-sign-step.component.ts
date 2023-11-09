@@ -12,6 +12,7 @@ export class PreviewSignStepComponent implements OnInit {
   documentsForSigning$: Observable<IntesaDocument[]>;
   isModalOpen = false;
   document: IntesaDocument | null = null;
+  documentPdfSrc = '';
   title = 'Potpiši dokument uz pomoć Consent ID aplikacije.';
   text =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -30,7 +31,11 @@ export class PreviewSignStepComponent implements OnInit {
 
   openDocumentModal(document: IntesaDocument) {
     this.document = document;
-    this.isModalOpen = true;
+
+    this._documentsService.getPdf(document.changesetID).subscribe(pdfSrc => {
+      this.documentPdfSrc = pdfSrc;
+      this.isModalOpen = true;
+    });
   }
 
   closeDocumentModal() {

@@ -3,6 +3,14 @@
   display: flex;
   flex-direction: column;
 
+  .loading-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ea600e;
+  }
+
   .pdf-wrapper {
     flex: 1;
     background-color: white;
