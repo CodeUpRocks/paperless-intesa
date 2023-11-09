@@ -1,5 +1,11 @@
 <div class="pdf-wrapper">
-  <div #pdfViewer class="pdf-viewer" appScrollTracker (scrolled)="onScroll()">
+  <div
+    *ngIf="pdfSrc; else loading"
+    #pdfViewer
+    class="pdf-viewer"
+    appScrollTracker
+    (scrolled)="onScroll()"
+  >
     <pdf-viewer
       [src]="pdfSrc"
       [render-text]="true"
@@ -12,6 +18,9 @@
       <img src="/assets/icons/scroll-down-icon.svg" alt="scroll-down-icon" />
     </button>
   </div>
+  <ng-template #loading>
+    <div class="loading-container">Učitavanje dokumenta...</div>
+  </ng-template>
 </div>
 
 <div class="actions">

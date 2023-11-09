@@ -4,11 +4,14 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { DocumentStep } from '@models/document.model';
+import { tap } from 'rxjs';
+import { DocumentsService } from 'src/app/services/documents.service';
 import { StepService } from 'src/app/services/step.service';
 
 @Component({
@@ -16,12 +19,12 @@ import { StepService } from 'src/app/services/step.service';
   templateUrl: './review-step.component.html',
   styleUrls: ['./review-step.component.scss'],
 })
-export class ReviewStepComponent implements OnChanges {
+export class ReviewStepComponent implements OnInit, OnChanges {
   @Input() id: number | string;
-  @Input() pdfSrc: string;
   @Input() changeButtonVisible: boolean;
   @Input() acceptButtonVisible: boolean;
 
+  pdfSrc: string;
   fit = false;
   actionsDisabled = true;
 
@@ -30,11 +33,29 @@ export class ReviewStepComponent implements OnChanges {
 
   @ViewChild('pdfViewer') pdfViewer: ElementRef<HTMLDivElement>;
 
-  constructor(private _stepService: StepService) {}
+  constructor(
+    private _documentsService: DocumentsService,
+    private _stepService: StepService
+  ) {}
+
+  ngOnInit(): void {
+    this.fetchPdf().subscribe();
+  }
+
+  fetchPdf() {
+    return this._documentsService.getPdf(this.id).pipe(
+      tap(pdfSrc => {
+        this.pdfSrc = pdfSrc;
+      })
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id']?.previousValue !== changes['id']?.currentValue) {
-      this.pdfViewer?.nativeElement?.scrollTo(0, 0);
+      this.pdfSrc = '';
+      this.fetchPdf().subscribe(() => {
+        this.pdfViewer?.nativeElement?.scrollTo(0, 0);
+      });
     }
   }
 

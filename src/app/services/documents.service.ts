@@ -5,7 +5,7 @@ import {
   IntesaDocumentType,
 } from '@models/document.model';
 import { hasSigns, toDocumentType } from '@shared/utils/document.utils';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, delay, map, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentsService {
@@ -40,5 +40,12 @@ export class DocumentsService {
     return this._documents$.pipe(
       map(documents => documents.filter(document => document.clientQESRequired))
     );
+  }
+
+  getPdf(changesetID: number | string) {
+    // TODO: Create an http request for fetching PDF for provided changesetID
+    return of(
+      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf'
+    ).pipe(delay(300));
   }
 }

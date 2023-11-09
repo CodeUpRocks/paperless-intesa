@@ -11,8 +11,6 @@ export const DOCUMENTS_FOR_REVIEW: IntesaDocument[] = [
     changeButtonVisible: false,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },
@@ -25,8 +23,6 @@ export const DOCUMENTS_FOR_REVIEW: IntesaDocument[] = [
     changeButtonVisible: false,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },
@@ -39,8 +35,6 @@ export const DOCUMENTS_FOR_REVIEW: IntesaDocument[] = [
     changeButtonVisible: false,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },
@@ -56,8 +50,6 @@ export const DOCUMENTS_TO_SIGN: IntesaDocument[] = [
     changeButtonVisible: true,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },
@@ -70,8 +62,6 @@ export const DOCUMENTS_TO_SIGN: IntesaDocument[] = [
     changeButtonVisible: true,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },
@@ -84,8 +74,6 @@ export const DOCUMENTS_TO_SIGN: IntesaDocument[] = [
     changeButtonVisible: true,
     acceptButtonVisible: true,
     documentStatus: DocumentStatus.INITIAL,
-    documentUrl:
-      'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf',
     processId: 1,
     processStatusId: 1,
   },

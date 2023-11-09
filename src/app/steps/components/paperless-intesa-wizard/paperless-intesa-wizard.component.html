@@ -25,7 +25,6 @@
     <app-review-step
       *ngIf="currentStep === wizardStep.REVIEW && currentDocument"
       [id]="currentDocument.changesetID"
-      [pdfSrc]="currentDocument.documentUrl"
       [acceptButtonVisible]="currentDocument.acceptButtonVisible"
       [changeButtonVisible]="currentDocument.changeButtonVisible"
       (accepted)="accepted.emit($event)"

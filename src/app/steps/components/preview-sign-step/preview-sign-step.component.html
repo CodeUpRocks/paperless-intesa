@@ -32,6 +32,7 @@
 
 <app-modal
   *ngIf="isModalOpen && document"
-  [document]="document"
+  [title]="document.documentName"
+  [pdfSrc]="documentPdfSrc"
   (closeModal)="closeDocumentModal()"
 ></app-modal>
