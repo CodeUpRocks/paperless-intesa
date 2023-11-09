@@ -30,6 +30,10 @@ export class SideNavToolbarComponent implements OnInit {
     this.initForSigningVM();
   }
 
+  collapseSidebar() {
+    this.collapsed = true;
+  }
+
   toggleSidebar() {
     this.collapsed = !this.collapsed;
   }

@@ -1,22 +1,25 @@
 <div class="background-image-wrapper"></div>
-<div>
-  <app-text-card [title]="title" [text]="text"></app-text-card>
 
-  <div class="content">
-    <div
-      class="document-wrapper"
-      *ngIf="documentsForSigning$ | async as documentsForSigning"
-      [ngClass]="{ 'one-column-wrapper': documentsForSigning.length === 1 }"
-    >
-      <app-document-view-item
-        *ngFor="let item of documentsForSigning"
-        [name]="item.documentName"
-        (openDocument)="openDocumentModal(item)"
-      ></app-document-view-item>
-    </div>
+<app-text-card [title]="title" [text]="text"></app-text-card>
+
+<div class="content">
+  <div
+    class="document-wrapper"
+    *ngIf="documentsForSigning$ | async as documentsForSigning"
+    [ngClass]="{ 'one-column-wrapper': documentsForSigning.length === 1 }"
+  >
+    <app-document-view-item
+      *ngFor="let item of documentsForSigning"
+      [name]="item.documentName"
+      (openDocument)="openDocumentModal(item)"
+    ></app-document-view-item>
   </div>
+</div>
 
+<div>
   <img
+    width="134px"
+    height="84px"
     style="margin-bottom: 10px"
     src="assets/icons/consentId-icon.svg"
     alt="consentId-icon"
@@ -25,6 +28,7 @@
     <span>Potpišite</span>
   </app-button>
 </div>
+
 <app-modal
   *ngIf="isModalOpen && document"
   [document]="document"

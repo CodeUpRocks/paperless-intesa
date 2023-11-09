@@ -1,23 +1,23 @@
 <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_696_54041)">
-<g filter="url(#filter0_d_696_54041)">
+<g clip-path="url(#clip0_825_1712)">
+<g filter="url(#filter0_d_825_1712)">
 <path d="M10.7656 26C10.7656 26 16.8594 16.8594 26 16.8594C35.1406 16.8594 41.2344 26 41.2344 26C41.2344 26 35.1406 35.1406 26 35.1406C16.8594 35.1406 10.7656 26 10.7656 26Z" fill="#EA600E"/>
 <path d="M10.7656 26C10.7656 26 16.8594 16.8594 26 16.8594C35.1406 16.8594 41.2344 26 41.2344 26C41.2344 26 35.1406 35.1406 26 35.1406C16.8594 35.1406 10.7656 26 10.7656 26Z" stroke="#EA600E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <path d="M26 21C26 21 31 21 31 26C31 26 31 31 26 31C26 31 21 31 21 26C21 26 21 21 26 21Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
-<filter id="filter0_d_696_54041" x="-9.98438" y="-1.89062" width="71.9688" height="59.7812" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d_825_1712" x="-4.98438" y="3.10938" width="61.9688" height="49.7812" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="2"/>
-<feGaussianBlur stdDeviation="10"/>
+<feGaussianBlur stdDeviation="7.5"/>
 <feComposite in2="hardAlpha" operator="out"/>
 <feColorMatrix type="matrix" values="0 0 0 0 0.917647 0 0 0 0 0.376471 0 0 0 0 0.054902 0 0 0 0.46 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_696_54041"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_696_54041" result="shape"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_825_1712"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_825_1712" result="shape"/>
 </filter>
-<clipPath id="clip0_696_54041">
+<clipPath id="clip0_825_1712">
 <rect width="52" height="52" fill="white"/>
 </clipPath>
 </defs>

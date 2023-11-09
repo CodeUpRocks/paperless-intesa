@@ -5,6 +5,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import {
   DocumentStatus,
@@ -15,6 +16,7 @@ import {
   DocumentStep,
 } from '@models/document.model';
 import { User } from '@models/user.model';
+import { SideNavToolbarComponent } from 'src/app/layouts/side-nav-toolbar/side-nav-toolbar.component';
 import { DocumentsService } from 'src/app/services/documents.service';
 import { StepService } from 'src/app/services/step.service';
 
@@ -47,6 +49,8 @@ export class IntesaWizardComponent implements OnChanges {
    */
   @Output() signatureRequested = new EventEmitter<void>();
 
+  @ViewChild(SideNavToolbarComponent) sidebar: SideNavToolbarComponent;
+
   currentStep: IntesaWizardStep;
   wizardStep = IntesaWizardStep;
   finalProcesState: ProcessState;
@@ -73,6 +77,7 @@ export class IntesaWizardComponent implements OnChanges {
 
   handleStartProcess() {
     this.startProcess.emit();
+    this.sidebar.collapseSidebar();
   }
 
   getDocumentsForSigning() {

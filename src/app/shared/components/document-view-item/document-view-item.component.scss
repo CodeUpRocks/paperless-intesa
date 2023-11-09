@@ -7,14 +7,25 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  gap: 50px;
-  min-width: 360px;
+  gap: 1rem;
+  width: 100%;
+  max-width: 360px;
 }
 
 .doc-review-details {
   display: flex;
   align-items: center;
   gap: 15px;
+
+  p {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    p {
+      font-size: 12px;
+    }
+  }
 }
 
 .eye-button {

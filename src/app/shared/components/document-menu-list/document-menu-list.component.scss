@@ -4,19 +4,20 @@
   height: 2px;
   width: 100%;
   margin-top: 7.5px;
-  margin-bottom: 32.5px;
+  margin-bottom: 25.5px;
 }
 
 .title {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 12px;
-  margin-bottom: 25px;
+  margin-bottom: 1rem;
 }
 
 .list-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 0.5rem;
 }
 
 .counter {

@@ -5,17 +5,8 @@
   flex-direction: column;
   position: relative;
 
-  .header {
-    // margin: 0 auto;
-    color: #fff;
-    height: 93px;
-    width: 100%;
-    background-color: #ea600e;
-  }
-
   div {
     display: flex;
-    flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -29,7 +20,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: start;
-    gap: 30px;
+    gap: 25px;
     grid-auto-rows: min-content;
   }
   div.one-column-wrapper {
@@ -37,8 +28,18 @@
   }
 
   div.content {
-    margin-top: 30px;
+    flex: 1;
+    padding: 1rem;
     justify-content: flex-start;
+    overflow-y: auto;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .document {
